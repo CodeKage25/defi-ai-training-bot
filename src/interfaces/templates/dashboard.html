@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeFi AI Trading Bot - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-blue-400">🤖 DeFi AI Bot</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                            <a href="/trading" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Trading</a>
+                            <a href="/portfolio" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Portfolio</a>
+                            <a href="/strategies" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Strategies</a>
+                            <a href="/analytics" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Analytics</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-sm text-gray-300">Live</span>
+                    </div>
+                    <button id="emergency-stop" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm font-medium">
+                        <i class="fas fa-stop mr-1"></i> Emergency Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <!-- Status Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- Portfolio Value -->
+            <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-500 bg-opacity-20">
+                        <i class="fas fa-wallet text-blue-400 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-400">Portfolio Value</p>
+                        <p class="text-2xl font-bold text-white" id="portfolio-value">$0.00</p>
+                        <p class="text-sm" id="portfolio-change">+0.00%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily P&L -->
+            <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-500 bg-opacity-20">
+                        <i class="fas fa-chart-line text-green-400 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-400">Daily P&L</p>
+                        <p class="text-2xl font-bold text-white" id="daily-pnl">$0.00</p>
+                        <p class="text-sm text-green-400" id="daily-pnl-change">+0.00%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Positions -->
+            <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-500 bg-opacity-20">
+                        <i class="fas fa-coins text-purple-400 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-400">Active Positions</p>
+                        <p class="text-2xl font-bold text-white" id="active-positions">0</p>
+                        <p class="text-sm text-gray-400" id="positions-value">$0.00 total</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Running Strategies -->
+            <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-500 bg-opacity-20">
+                        <i class="fas fa-robot text-yellow-400 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-400">Active Strategies</p>
+                        <p class="text-2xl font-bold text-white" id="active-strategies">0</p>
+                        <p class="text-sm text-gray-400">Automated trading</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Portfolio Chart -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Portfolio Performance</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600" onclick="updateChart('1d')">1D</button>
+                            <button class="px-3 py-1 text-sm bg-blue-600 rounded" onclick="updateChart('7d')">7D</button>
+                            <button class="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600" onclick="updateChart('30d')">30D</button>
+                        </div>
+                    </div>
+                    <canvas id="portfolio-chart" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Market Opportunities -->
+            <div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Market Opportunities</h3>
+                        <button onclick="scanMarket()" class="text-blue-400 hover:text-blue-300 text-sm">
+                            <i class="fas fa-sync-alt mr-1"></i> Scan
+                        </button>
+                    </div>
+                    <div id="opportunities-list" class="space-y-3">
+                        <!-- Opportunities will be loaded here -->
+                        <div class="flex items-center justify-between p-3 bg-gray-700 rounded">
+                            <div>
+                                <p class="font-medium">Loading...</p>
+                                <p class="text-sm text-gray-400">Scanning markets...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Positions and Recent Trades -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+            <!-- Active Positions -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Active Positions</h3>
+                    <button onclick="refreshPositions()" class="text-blue-400 hover:text-blue-300 text-sm">
+                        <i class="fas fa-refresh mr-1"></i> Refresh
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="text-left text-gray-400 text-sm">
+                                <th class="pb-3">Token</th>
+                                <th class="pb-3">Size</th>
+                                <th class="pb-3">Entry</th>
+                                <th class="pb-3">Current</th>
+                                <th class="pb-3">P&L</th>
+                                <th class="pb-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="positions-table">
+                            <tr>
+                                <td colspan="6" class="text-center text-gray-400 py-4">No active positions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Trades -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Recent Trades</h3>
+                    <a href="/trading" class="text-blue-400 hover:text-blue-300 text-sm">
+                        <i class="fas fa-external-link-alt mr-1"></i> View All
+                    </a>
+                </div>
+                <div id="recent-trades" class="space-y-3">
+                    <div class="text-center text-gray-400 py-4">No recent trades</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="mt-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">System Status</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Agents Status -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-400 mb-2">AI Agents</h4>
+                        <div class="space-y-2" id="agents-status">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Market Intelligence</span>
+                                <span class="flex items-center">
+                                    <div class="h-2 w-2 bg-green-400 rounded-full mr-2"></div>
+                                    <span class="text-xs text-green-400">Active</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blockchain Connections -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-400 mb-2">Blockchain Connections</h4>
+                        <div class="space-y-2" id="chains-status">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-400 mb-2">Performance</h4>
+                        <div class="space-y-2" id="performance-status">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Success Rate</span>
+                                <span class="text-sm text-green-400" id="success-rate">--</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Avg Execution</span>
+                                <span class="text-sm text-blue-400" id="avg-execution">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-gray-800 p-6 rounded-lg flex items-center space-x-4">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+            <span id="loading-text">Processing...</span>
+        </div>
+    </div>
+
+    <!-- WebSocket Connection Status -->
+    <div id="connection-status" class="fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-medium hidden">
+        <span id="connection-text"></span>
+    </div>
+
+    <script>
+        // WebSocket connection
+        let ws = null;
+        let reconnectAttempts = 0;
+        const maxReconnectAttempts = 5;
+        
+        // Generate client ID
+        const clientId = 'client_' + Math.random().toString(36).substr(2, 9);
+        
+        // Initialize WebSocket
+        function initWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws/${clientId}`;
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                reconnectAttempts = 0;
+                showConnectionStatus('Connected', 'bg-green-600');
+                
+                // Subscribe to dashboard updates
+                ws.send(JSON.stringify({
+                    type: 'subscribe',
+                    data: {
+                        subscriptions: ['dashboard', 'trades', 'positions', 'strategies']
+                    }
+                }));
+                
+                setTimeout(() => hideConnectionStatus(), 2000);
+            };
+            
+            ws.onmessage = function(event) {
+                const message = JSON.parse(event.data);
+                handleWebSocketMessage(message);
+            };
+            
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                showConnectionStatus('Disconnected', 'bg-red-600');
+                
+                if (reconnectAttempts < maxReconnectAttempts) {
+                    reconnectAttempts++;
+                    setTimeout(() => {
+                        console.log(`Reconnecting... Attempt ${reconnectAttempts}`);
+                        initWebSocket();
+                    }, 3000 * reconnectAttempts);
+                }
+            };
+            
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+                showConnectionStatus('Connection Error', 'bg-red-600');
+            };
+        }
+        
+        function handleWebSocketMessage(message) {
+            switch (message.type) {
+                case 'dashboard_update':
+                    updateDashboard(message.data);
+                    break;
+                case 'trade_executed':
+                    showNotification('Trade executed successfully', 'success');
+                    loadRecentTrades();
+                    break;
+                case 'position_closed':
+                    showNotification('Position closed', 'info');
+                    loadPositions();
+                    break;
+                case 'emergency_stop':
+                    showNotification('Emergency stop activated', 'error');
+                    break;
+                default:
+                    console.log('Unknown message type:', message.type);
+            }
+        }
+        
+        function showConnectionStatus(text, bgClass) {
+            const status = document.getElementById('connection-status');
+            const statusText = document.getElementById('connection-text');
+            statusText.textContent = text;
+            status.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-medium ${bgClass} text-white`;
+            status.classList.remove('hidden');
+        }
+        
+        function hideConnectionStatus() {
+            document.getElementById('connection-status').classList.add('hidden');
+        }
+        
+        // Dashboard functions
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/dashboard');
+                const data = await response.json();
+                updateDashboard(data);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+        
+        function updateDashboard(data) {
+            // Update portfolio summary
+            if (data.portfolio_summary) {
+                document.getElementById('portfolio-value').textContent = 
+                    ' + data.portfolio_summary.total_value.toLocaleString('en-US', {minimumFractionDigits: 2});
+                
+                document.getElementById('daily-pnl').textContent = 
+                    ' + data.portfolio_summary.daily_pnl.toLocaleString('en-US', {minimumFractionDigits: 2});
+                
+                const pnlClass = data.portfolio_summary.daily_pnl >= 0 ? 'text-green-400' : 'text-red-400';
+                const pnlSign = data.portfolio_summary.daily_pnl >= 0 ? '+' : '';
+                document.getElementById('daily-pnl').className = `text-2xl font-bold ${pnlClass}`;
+                
+                document.getElementById('active-positions').textContent = data.portfolio_summary.positions_count;
+                document.getElementById('active-strategies').textContent = data.portfolio_summary.active_strategies;
+            }
+            
+            // Update positions
+            if (data.active_positions) {
+                updatePositionsTable(data.active_positions);
+            }
+            
+            // Update recent trades
+            if (data.recent_trades) {
+                updateRecentTrades(data.recent_trades);
+            }
+            
+            // Update market opportunities
+            if (data.market_opportunities) {
+                updateOpportunities(data.market_opportunities);
+            }
+            
+            // Update system status
+            if (data.system_status) {
+                updateSystemStatus(data.system_status);
+            }
+        }
+        
+        function updatePositionsTable(positions) {
+            const tbody = document.getElementById('positions-table');
+            
+            if (positions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-gray-400 py-4">No active positions</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = positions.map(position => {
+                const pnlClass = position.pnl >= 0 ? 'text-green-400' : 'text-red-400';
+                const pnlSign = position.pnl >= 0 ? '+' : '';
+                
+                return `
+                    <tr class="border-t border-gray-700">
+                        <td class="py-3">${position.token_pair}</td>
+                        <td class="py-3">${position.size.toFixed(4)}</td>
+                        <td class="py-3">${position.entry_price.toFixed(2)}</td>
+                        <td class="py-3">${position.current_price.toFixed(2)}</td>
+                        <td class="py-3 ${pnlClass}">${pnlSign}${Math.abs(position.pnl).toFixed(2)}</td>
+                        <td class="py-3">
+                            <button onclick="closePosition('${position.id}')" 
+                                    class="text-red-400 hover:text-red-300 text-sm">
+                                Close
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        function updateRecentTrades(trades) {
+            const container = document.getElementById('recent-trades');
+            
+            if (trades.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-400 py-4">No recent trades</div>';
+                return;
+            }
+            
+            container.innerHTML = trades.slice(-5).reverse().map(trade => {
+                const statusClass = trade.status === 'completed' ? 'text-green-400' : 'text-yellow-400';
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded">
+                        <div>
+                            <p class="font-medium">${trade.input?.token || 'N/A'} → ${trade.output?.token || 'N/A'}</p>
+                            <p class="text-sm text-gray-400">${new Date(trade.timestamp).toLocaleTimeString()}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm ${statusClass}">${trade.status}</p>
+                            <p class="text-sm text-gray-400">${(trade.output?.amount || 0).toFixed(2)}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateOpportunities(opportunities) {
+            const container = document.getElementById('opportunities-list');
+            
+            if (opportunities.length === 0) {
+                container.innerHTML = `
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded">
+                        <div>
+                            <p class="font-medium">No opportunities found</p>
+                            <p class="text-sm text-gray-400">Market conditions stable</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = opportunities.slice(0, 3).map(opp => {
+                const riskColor = opp.risk_level === 'low' ? 'text-green-400' : 
+                               opp.risk_level === 'medium' ? 'text-yellow-400' : 'text-red-400';
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded hover:bg-gray-600 cursor-pointer">
+                        <div>
+                            <p class="font-medium">${opp.type.toUpperCase()}: ${opp.tokens.join('/')}</p>
+                            <p class="text-sm text-gray-400">${opp.chain} • ${(opp.confidence * 100).toFixed(1)}% confidence</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-green-400 font-medium">${opp.profit_potential.toFixed(2)}</p>
+                            <p class="text-sm ${riskColor}">${opp.risk_level} risk</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateSystemStatus(status) {
+            // Update agents status
+            const agentsContainer = document.getElementById('agents-status');
+            if (status.agents) {
+                agentsContainer.innerHTML = Object.entries(status.agents).map(([name, agentStatus]) => {
+                    const statusColor = agentStatus === 'active' ? 'bg-green-400' : 'bg-yellow-400';
+                    const textColor = agentStatus === 'active' ? 'text-green-400' : 'text-yellow-400';
+                    
+                    return `
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">${name.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                            <span class="flex items-center">
+                                <div class="h-2 w-2 ${statusColor} rounded-full mr-2"></div>
+                                <span class="text-xs ${textColor}">${agentStatus}</span>
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Update chains status
+            const chainsContainer = document.getElementById('chains-status');
+            if (status.connections) {
+                chainsContainer.innerHTML = Object.entries(status.connections).map(([chain, chainStatus]) => {
+                    const statusColor = chainStatus === 'connected' ? 'bg-green-400' : 'bg-red-400';
+                    const textColor = chainStatus === 'connected' ? 'text-green-400' : 'text-red-400';
+                    
+                    return `
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">${chain.charAt(0).toUpperCase() + chain.slice(1)}</span>
+                            <span class="flex items-center">
+                                <div class="h-2 w-2 ${statusColor} rounded-full mr-2"></div>
+                                <span class="text-xs ${textColor}">${chainStatus}</span>
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Update performance metrics
+            if (status.performance) {
+                document.getElementById('success-rate').textContent = 
+                    (status.performance.win_rate || 0).toFixed(1) + '%';
+                document.getElementById('avg-execution').textContent = '2.5s'; // Mock value
+            }
+        }
+        
+        // Chart initialization
+        let portfolioChart = null;
+        
+        function initPortfolioChart() {
+            const ctx = document.getElementById('portfolio-chart').getContext('2d');
+            
+            // Mock data
+            const labels = Array.from({length: 24}, (_, i) => {
+                const date = new Date();
+                date.setHours(date.getHours() - (23 - i));
+                return date.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+            });
+            
+            const data = Array.from({length: 24}, () => 25000 + Math.random() * 2000 - 1000);
+            
+            portfolioChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Portfolio Value',
+                        data: data,
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(75, 85, 99, 0.2)'
+                            },
+                            ticks: {
+                                color: 'rgb(156, 163, 175)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(75, 85, 99, 0.2)'
+                            },
+                            ticks: {
+                                color: 'rgb(156, 163, 175)',
+                                callback: function(value) {
+                                    return ' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Action functions
+        async function scanMarket() {
+            showLoading('Scanning market opportunities...');
+            try {
+                const response = await fetch('/api/market/scan');
+                const data = await response.json();
+                updateOpportunities(data.opportunities);
+                hideLoading();
+                showNotification(`Found ${data.opportunities.length} opportunities`, 'success');
+            } catch (error) {
+                hideLoading();
+                showNotification('Error scanning market', 'error');
+                console.error('Error scanning market:', error);
+            }
+        }
+        
+        async function closePosition(positionId) {
+            if (!confirm('Are you sure you want to close this position?')) {
+                return;
+            }
+            
+            showLoading('Closing position...');
+            try {
+                const response = await fetch(`/api/positions/${positionId}/close`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                hideLoading();
+                if (result.success) {
+                    showNotification('Position closed successfully', 'success');
+                    loadPositions();
+                } else {
+                    showNotification('Error closing position', 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                showNotification('Error closing position', 'error');
+                console.error('Error closing position:', error);
+            }
+        }
+        
+        async function refreshPositions() {
+            try {
+                const response = await fetch('/api/positions');
+                const data = await response.json();
+                updatePositionsTable(data.positions);
+            } catch (error) {
+                console.error('Error refreshing positions:', error);
+            }
+        }
+        
+        async function loadPositions() {
+            await refreshPositions();
+        }
+        
+        async function loadRecentTrades() {
+            try {
+                const response = await fetch('/api/trades/history?limit=10');
+                const data = await response.json();
+                updateRecentTrades(data.trades);
+            } catch (error) {
+                console.error('Error loading recent trades:', error);
+            }
+        }
+        
+        function updateChart(timeframe) {
+            // Update chart active button
+            document.querySelectorAll('button[onclick^="updateChart"]').forEach(btn => {
+                btn.className = 'px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600';
+            });
+            event.target.className = 'px-3 py-1 text-sm bg-blue-600 rounded';
+            
+            // Update chart data (mock)
+            if (portfolioChart) {
+                // Generate new mock data based on timeframe
+                const periods = timeframe === '1d' ? 24 : timeframe === '7d' ? 7 : 30;
+                const newData = Array.from({length: periods}, () => 25000 + Math.random() * 2000 - 1000);
+                portfolioChart.data.datasets[0].data = newData;
+                portfolioChart.update();
+            }
+        }
+        
+        // Emergency stop
+        document.getElementById('emergency-stop').addEventListener('click', async function() {
+            if (!confirm('Are you sure you want to execute an emergency stop? This will halt all trading activities.')) {
+                return;
+            }
+            
+            showLoading('Executing emergency stop...');
+            try {
+                const response = await fetch('/api/emergency-stop', {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                hideLoading();
+                if (result.success) {
+                    showNotification('Emergency stop executed', 'error');
+                } else {
+                    showNotification('Error executing emergency stop', 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                showNotification('Error executing emergency stop', 'error');
+                console.error('Error executing emergency stop:', error);
+            }
+        });
+        
+        // Utility functions
+        function showLoading(text = 'Loading...') {
+            document.getElementById('loading-text').textContent = text;
+            document.getElementById('loading-modal').classList.remove('hidden');
+            document.getElementById('loading-modal').classList.add('flex');
+        }
+        
+        function hideLoading() {
+            document.getElementById('loading-modal').classList.add('hidden');
+            document.getElementById('loading-modal').classList.remove('flex');
+        }
+        
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-blue-600',
+                warning: 'bg-yellow-600'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-medium ${colors[type]} z-50`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initWebSocket();
+            initPortfolioChart();
+            loadDashboardData();
+            
+            // Set up periodic updates
+            setInterval(loadDashboardData, 30000); // Update every 30 seconds
+        });
+    </script>
+</body>
+</html>

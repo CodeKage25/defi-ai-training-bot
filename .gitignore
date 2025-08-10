@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.build/
+dist/
+.eggs/
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Env & secrets
+.env
+*.env
+.env.*
+.envrc
+*.pem
+*.key
+*.p12
+
+# Virtual envs
+venv/
+.venv/
+env/
+.env/
+
+# macOS
+.DS_Store
