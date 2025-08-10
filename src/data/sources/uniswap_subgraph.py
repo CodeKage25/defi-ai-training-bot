@@ -2,7 +2,7 @@ from typing import Optional
 from .thegraph import graph_query
 from ..models import PoolLiquidity
 
-UNI_V3 = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
+UNI_V3 = "https://api.thegraph.com/subgraphs/defi-ai-trading-bot/uniswap/uniswap-v3"
 
 POOL_QUERY = """
 {
