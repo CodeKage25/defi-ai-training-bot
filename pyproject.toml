@@ -71,8 +71,8 @@ Documentation = "https://github.com/CodeKage25/defi-ai-trading-bot/docs"
 "Bug Tracker" = "https://github.com/CodeKage25/defi-ai-trading-bot/issues"
 
 [project.scripts]
-defi-bot = "src.cli.main:main"
-bot-cli = "src.cli.main:main"
+defi-bot = "cli.main:main"
+bot-cli = "cli.main:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

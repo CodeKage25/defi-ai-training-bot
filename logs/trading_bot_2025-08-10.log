@@ -1,0 +1,498 @@
+2025-08-10 13:42:57.536 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 13:42:58.694 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 13:43:00.009 | WARNING  | cli.main:setup_web3:457 - ⚠️ Chain ID mismatch for polygon: expected 137, got 1101
+2025-08-10 13:43:01.270 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 13:43:02.166 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 13:43:03.218 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 13:43:03.220 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 13:43:03.220 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'model'
+2025-08-10 13:43:03.221 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 13:43:03.233 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 13:47:35.523 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 13:47:35.540 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 13:47:36.349 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 13:47:37.359 | WARNING  | cli.main:setup_web3:457 - ⚠️ Chain ID mismatch for polygon: expected 137, got 1101
+2025-08-10 13:47:38.003 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 13:47:38.667 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 13:47:39.385 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 13:47:39.385 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 13:47:39.385 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'model'
+2025-08-10 13:47:39.385 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 13:47:39.386 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:00:01.627 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:00:02.693 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:00:03.904 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:00:04.826 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:00:05.893 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:00:06.942 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:00:06.944 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:00:06.944 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'model'
+2025-08-10 14:00:06.945 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:00:06.947 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:01:21.007 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:01:21.042 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:01:21.844 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:01:22.736 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:01:23.577 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:01:24.365 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:01:25.221 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:01:25.221 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:01:25.222 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'model'
+2025-08-10 14:01:25.222 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:01:25.223 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:11:56.505 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:11:56.559 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:11:57.568 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:11:58.831 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:11:59.859 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:12:00.947 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:12:02.199 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:12:02.207 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:12:02.208 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'temperature'
+2025-08-10 14:12:02.208 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:12:02.218 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:12:35.473 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:12:35.560 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:12:37.310 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:12:38.250 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:12:38.890 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:12:39.616 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:12:40.413 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:12:40.413 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:12:40.413 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: 'max_tokens'
+2025-08-10 14:12:40.414 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:12:40.414 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:12:55.802 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:12:55.829 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:12:56.419 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:12:57.313 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:12:58.084 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:12:58.788 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:12:59.521 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:12:59.522 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:12:59.526 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: ChatBot.__init__() got an unexpected keyword argument 'temperature'
+2025-08-10 14:12:59.526 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:12:59.526 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:15:21.675 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:15:21.721 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:15:22.392 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:15:23.417 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:15:24.099 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:15:24.823 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:15:25.643 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:15:25.643 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:15:25.644 | ERROR    | cli.main:setup_llm:499 - Failed to setup LLM: ChatBot.__init__() got an unexpected keyword argument 'temperature'
+2025-08-10 14:15:25.648 | WARNING  | cli.main:initialize_agents:543 - LLM not available - agents will run in mock mode
+2025-08-10 14:15:25.648 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:17:46.828 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:17:47.976 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:17:49.860 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:17:50.744 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:17:51.559 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:17:52.546 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:17:52.546 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:17:52.932 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:24:46.703 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:24:47.662 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:24:48.882 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:24:50.011 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:24:50.923 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:24:51.883 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:24:51.883 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:24:52.235 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:28:58.309 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:28:58.384 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:28:59.184 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:29:00.308 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:29:01.080 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:29:01.896 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:29:02.677 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:29:02.678 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:29:02.720 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:29:33.734 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:29:33.752 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:29:34.365 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:29:35.282 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:29:35.983 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:29:36.598 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:29:37.412 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:29:37.412 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:29:37.424 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:30:40.331 | INFO     | cli.main:load_config:262 - Configuration loaded from config/config.json
+2025-08-10 14:30:40.376 | INFO     | cli.main:setup_logging:381 - Logging system configured
+2025-08-10 14:30:41.119 | INFO     | cli.main:setup_web3:455 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:30:42.325 | INFO     | cli.main:setup_web3:455 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:30:43.146 | INFO     | cli.main:setup_web3:455 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:30:44.324 | INFO     | cli.main:setup_web3:455 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:30:45.033 | INFO     | cli.main:setup_web3:455 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:30:45.033 | INFO     | cli.main:setup_llm:474 - Initializing OpenAI LLM provider
+2025-08-10 14:30:45.073 | ERROR    | cli.main:initialize_agents:551 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:36:36.301 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 14:36:37.124 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:36:38.419 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:36:39.274 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:36:40.347 | INFO     | cli.main:setup_web3:467 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:36:41.440 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:36:41.441 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 14:36:41.492 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:45:38.535 | INFO     | cli.main:load_config:274 - Configuration loaded from config/config.json
+2025-08-10 14:45:44.003 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 14:45:45.280 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:45:46.580 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:45:47.941 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:45:49.442 | INFO     | cli.main:setup_web3:467 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:45:50.766 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:45:50.767 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 14:45:50.854 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:54:10.928 | INFO     | cli.main:load_config:274 - Configuration loaded from config/config.json
+2025-08-10 14:54:11.030 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 14:54:12.005 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:54:13.428 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:54:14.800 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:54:15.326 | WARNING  | cli.main:setup_web3:471 - ⚠️ Failed to connect to arbitrum
+2025-08-10 14:54:16.487 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:54:16.492 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 14:54:16.525 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:54:34.511 | INFO     | cli.main:load_config:274 - Configuration loaded from config/config.json
+2025-08-10 14:54:34.589 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 14:54:35.300 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:54:36.221 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:54:36.852 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:54:37.784 | INFO     | cli.main:setup_web3:467 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:54:38.491 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:54:38.491 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 14:54:38.509 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 14:55:21.565 | INFO     | cli.main:load_config:274 - Configuration loaded from config/config.json
+2025-08-10 14:55:21.611 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 14:55:22.444 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 14:55:23.346 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 14:55:24.018 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 14:55:24.630 | INFO     | cli.main:setup_web3:467 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 14:55:38.628 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 14:55:38.628 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 14:55:38.653 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 15:02:46.900 | INFO     | cli.main:load_config:274 - Configuration loaded from config/config.json
+2025-08-10 15:02:47.183 | INFO     | cli.main:setup_logging:393 - Logging system configured
+2025-08-10 15:02:48.202 | INFO     | cli.main:setup_web3:467 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:02:49.451 | INFO     | cli.main:setup_web3:467 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:02:50.317 | INFO     | cli.main:setup_web3:467 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:02:51.752 | INFO     | cli.main:setup_web3:467 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:02:52.805 | INFO     | cli.main:setup_web3:467 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 15:02:52.805 | INFO     | cli.main:setup_llm:486 - Initializing OpenAI LLM provider
+2025-08-10 15:02:52.863 | ERROR    | cli.main:initialize_agents:563 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 15:03:06.562 | INFO     | cli.main:setup_logging:395 - Logging system configured
+2025-08-10 15:03:07.482 | INFO     | cli.main:setup_web3:469 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:03:08.534 | INFO     | cli.main:setup_web3:469 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:03:09.502 | INFO     | cli.main:setup_web3:469 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:03:10.418 | INFO     | cli.main:setup_web3:469 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:03:11.321 | INFO     | cli.main:setup_web3:469 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 15:03:11.322 | INFO     | cli.main:setup_llm:488 - Initializing OpenAI LLM provider
+2025-08-10 15:03:11.560 | ERROR    | cli.main:initialize_agents:601 - Failed to initialize agents: ToolManager.__init__() missing 1 required positional argument: 'tools'
+2025-08-10 15:06:31.298 | INFO     | cli.main:setup_logging:395 - Logging system configured
+2025-08-10 15:06:33.650 | INFO     | cli.main:setup_web3:469 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:06:34.802 | INFO     | cli.main:setup_web3:469 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:06:49.918 | WARNING  | cli.main:setup_web3:473 - ⚠️ Failed to connect to bsc
+2025-08-10 15:07:01.240 | INFO     | cli.main:setup_web3:469 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:07:02.643 | INFO     | cli.main:setup_web3:469 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 15:07:02.643 | INFO     | cli.main:setup_llm:488 - Initializing OpenAI LLM provider
+2025-08-10 15:07:03.013 | ERROR    | cli.main:initialize_agents:601 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 15:12:55.448 | INFO     | cli.main:setup_logging:395 - Logging system configured
+2025-08-10 15:12:56.746 | INFO     | cli.main:setup_web3:469 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:12:58.486 | INFO     | cli.main:setup_web3:469 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:12:59.463 | INFO     | cli.main:setup_web3:469 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:13:00.481 | INFO     | cli.main:setup_web3:469 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:13:01.454 | INFO     | cli.main:setup_web3:469 - ✅ Connected to optimism network (Chain ID: 10)
+2025-08-10 15:13:01.456 | INFO     | cli.main:setup_llm:488 - Initializing OpenAI LLM provider
+2025-08-10 15:13:01.924 | ERROR    | cli.main:initialize_agents:601 - Failed to initialize agents: 'str' object has no attribute 'name'
+2025-08-10 15:47:39.336 | INFO     | cli.main:setup_logging:439 - Logging system configured
+2025-08-10 15:47:40.238 | INFO     | cli.main:setup_web3:512 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:47:41.386 | INFO     | cli.main:setup_web3:512 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:47:42.389 | INFO     | cli.main:setup_web3:512 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:47:43.780 | INFO     | cli.main:setup_web3:512 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:47:43.780 | INFO     | cli.main:setup_llm:533 - API keys found - would initialize real LLM provider
+2025-08-10 15:47:43.781 | INFO     | cli.main:initialize_agents:601 - ✅ Mock AI agents initialized successfully
+2025-08-10 15:47:43.935 | INFO     | cli.main:setup_redis:549 - ✅ Connected to Redis cache
+2025-08-10 15:47:43.990 | WARNING  | cli.main:setup_database:570 - Database connection failed: No module named 'psycopg2'
+2025-08-10 15:47:43.991 | INFO     | cli.main:__init__:303 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 15:50:04.589 | INFO     | cli.main:setup_logging:438 - Logging system configured
+2025-08-10 15:50:05.709 | INFO     | cli.main:setup_web3:511 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:50:08.171 | INFO     | cli.main:setup_web3:511 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:50:09.434 | INFO     | cli.main:setup_web3:511 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:50:10.421 | INFO     | cli.main:setup_web3:511 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:50:10.421 | INFO     | cli.main:setup_llm:532 - API keys found - would initialize real LLM provider
+2025-08-10 15:50:10.421 | INFO     | cli.main:initialize_agents:600 - ✅ Mock AI agents initialized successfully
+2025-08-10 15:50:10.426 | INFO     | cli.main:setup_redis:548 - ✅ Connected to Redis cache
+2025-08-10 15:50:10.936 | WARNING  | cli.main:setup_database:569 - Database connection failed: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "defi_trading_bot" does not exist
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-10 15:50:10.937 | INFO     | cli.main:__init__:302 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 15:54:53.125 | INFO     | cli.main:setup_logging:438 - Logging system configured
+2025-08-10 15:55:54.713 | INFO     | cli.main:setup_web3:511 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 15:55:55.838 | INFO     | cli.main:setup_web3:511 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 15:55:56.870 | INFO     | cli.main:setup_web3:511 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 15:55:57.831 | INFO     | cli.main:setup_web3:511 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 15:55:57.831 | INFO     | cli.main:setup_llm:532 - API keys found - would initialize real LLM provider
+2025-08-10 15:55:57.832 | INFO     | cli.main:initialize_agents:600 - ✅ Mock AI agents initialized successfully
+2025-08-10 15:55:57.861 | INFO     | cli.main:setup_redis:548 - ✅ Connected to Redis cache
+2025-08-10 15:55:59.224 | INFO     | cli.main:setup_database:563 - ✅ Connected to database
+2025-08-10 15:55:59.224 | INFO     | cli.main:__init__:302 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:07:20.768 | INFO     | cli.main:load_config:328 - Configuration loaded from config/config.json
+2025-08-10 16:07:20.900 | INFO     | cli.main:setup_logging:438 - Logging system configured
+2025-08-10 16:07:21.943 | INFO     | cli.main:setup_web3:511 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:07:23.147 | INFO     | cli.main:setup_web3:511 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:07:24.904 | INFO     | cli.main:setup_web3:511 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:07:25.923 | INFO     | cli.main:setup_web3:511 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:07:25.924 | INFO     | cli.main:setup_llm:532 - API keys found - would initialize real LLM provider
+2025-08-10 16:07:25.924 | INFO     | cli.main:initialize_agents:600 - ✅ Mock AI agents initialized successfully
+2025-08-10 16:07:25.988 | INFO     | cli.main:setup_redis:548 - ✅ Connected to Redis cache
+2025-08-10 16:07:26.259 | INFO     | cli.main:setup_database:563 - ✅ Connected to database
+2025-08-10 16:07:26.259 | INFO     | cli.main:__init__:302 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:24:38.273 | INFO     | cli.main:setup_logging:680 - Logging system configured
+2025-08-10 16:24:49.735 | INFO     | cli.main:setup_web3:753 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:24:53.373 | INFO     | cli.main:setup_web3:753 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:24:55.251 | INFO     | cli.main:setup_web3:753 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:24:56.351 | INFO     | cli.main:setup_web3:753 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:24:56.352 | INFO     | cli.main:setup_llm_manager:792 - SpoonOS not available, will use direct API calls
+2025-08-10 16:24:56.352 | INFO     | cli.main:setup_tools:841 - ✅ Initialized 3 trading tools
+2025-08-10 16:24:56.352 | INFO     | cli.main:_initialize_fallback_agents:975 - ✅ Fallback agents initialized successfully
+2025-08-10 16:24:56.445 | INFO     | cli.main:setup_redis:801 - ✅ Connected to Redis cache
+2025-08-10 16:24:56.688 | INFO     | cli.main:setup_database:816 - ✅ Connected to database
+2025-08-10 16:24:56.688 | INFO     | cli.main:__init__:498 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:24:56.693 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:24:56.693 | ERROR    | cli.main:run:342 - OpenAI API error: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:24:58.255 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:24:58.255 | ERROR    | cli.main:run:342 - OpenAI API error: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:27:57.521 | INFO     | cli.main:setup_logging:680 - Logging system configured
+2025-08-10 16:28:00.687 | INFO     | cli.main:setup_web3:753 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:28:04.389 | INFO     | cli.main:setup_web3:753 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:28:06.416 | INFO     | cli.main:setup_web3:753 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:28:08.561 | INFO     | cli.main:setup_web3:753 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:28:08.561 | INFO     | cli.main:setup_llm_manager:792 - SpoonOS not available, will use direct API calls
+2025-08-10 16:28:08.561 | INFO     | cli.main:setup_tools:841 - ✅ Initialized 3 trading tools
+2025-08-10 16:28:08.566 | INFO     | cli.main:_initialize_fallback_agents:975 - ✅ Fallback agents initialized successfully
+2025-08-10 16:28:08.616 | INFO     | cli.main:setup_redis:801 - ✅ Connected to Redis cache
+2025-08-10 16:28:08.813 | INFO     | cli.main:setup_database:816 - ✅ Connected to database
+2025-08-10 16:28:08.813 | INFO     | cli.main:__init__:498 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:28:10.613 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:28:10.613 | ERROR    | cli.main:run:342 - OpenAI API error: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:28:13.579 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:28:13.580 | ERROR    | cli.main:run:342 - OpenAI API error: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:31:13.125 | INFO     | cli.main:load_config:530 - Configuration loaded from config/config.json
+2025-08-10 16:31:13.135 | INFO     | cli.main:setup_logging:680 - Logging system configured
+2025-08-10 16:31:17.098 | INFO     | cli.main:setup_web3:753 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:31:24.053 | INFO     | cli.main:setup_web3:753 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:32:00.990 | INFO     | cli.main:setup_web3:753 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:32:10.470 | INFO     | cli.main:setup_web3:753 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:32:10.470 | INFO     | cli.main:setup_llm_manager:792 - SpoonOS not available, will use direct API calls
+2025-08-10 16:32:10.470 | INFO     | cli.main:setup_tools:841 - ✅ Initialized 3 trading tools
+2025-08-10 16:32:10.470 | INFO     | cli.main:_initialize_fallback_agents:975 - ✅ Fallback agents initialized successfully
+2025-08-10 16:32:10.475 | INFO     | cli.main:setup_redis:801 - ✅ Connected to Redis cache
+2025-08-10 16:32:10.545 | INFO     | cli.main:setup_database:816 - ✅ Connected to database
+2025-08-10 16:32:10.546 | INFO     | cli.main:__init__:498 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:32:18.500 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:32:18.501 | ERROR    | cli.main:run:342 - OpenAI API error: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:32:21.053 | ERROR    | cli.main:_make_openai_call:361 - OpenAI API call failed: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:32:21.053 | ERROR    | cli.main:run:342 - OpenAI API error: Incorrect API key provided: sk-or-v1*************************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.
+2025-08-10 16:38:09.186 | INFO     | cli.main:setup_logging:681 - Logging system configured
+2025-08-10 16:38:21.653 | INFO     | cli.main:setup_web3:754 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:38:46.292 | INFO     | cli.main:setup_web3:754 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:38:47.584 | INFO     | cli.main:setup_web3:754 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:38:48.684 | INFO     | cli.main:setup_web3:754 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:38:48.687 | INFO     | cli.main:setup_llm_manager:793 - SpoonOS not available, will use direct API calls
+2025-08-10 16:38:48.687 | INFO     | cli.main:setup_tools:842 - ✅ Initialized 3 trading tools
+2025-08-10 16:38:49.021 | INFO     | cli.main:_initialize_fallback_agents:976 - ✅ Fallback agents initialized successfully
+2025-08-10 16:38:49.138 | INFO     | cli.main:setup_redis:802 - ✅ Connected to Redis cache
+2025-08-10 16:38:49.813 | INFO     | cli.main:setup_database:817 - ✅ Connected to database
+2025-08-10 16:38:49.814 | INFO     | cli.main:__init__:499 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:38:49.819 | ERROR    | cli.main:_make_openai_call:362 - OpenAI API call failed: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:38:49.819 | ERROR    | cli.main:run:343 - OpenAI API error: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:38:51.322 | ERROR    | cli.main:_make_openai_call:362 - OpenAI API call failed: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:38:51.322 | ERROR    | cli.main:run:343 - OpenAI API error: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-08-10 16:54:44.784 | INFO     | cli.main:setup_logging:592 - Logging system configured
+2025-08-10 16:54:46.126 | INFO     | cli.main:setup_web3:629 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 16:54:47.514 | INFO     | cli.main:setup_web3:629 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 16:54:48.554 | INFO     | cli.main:setup_web3:629 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 16:54:49.627 | INFO     | cli.main:setup_web3:629 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 16:54:49.627 | INFO     | cli.main:setup_llm_manager:661 - SpoonOS not available, will use direct API calls
+2025-08-10 16:54:49.627 | INFO     | cli.main:setup_tools:704 - ✅ Initialized 3 trading tools
+2025-08-10 16:54:49.975 | INFO     | cli.main:_initialize_fallback_agents:789 - ✅ Fallback agents initialized successfully
+2025-08-10 16:54:50.573 | INFO     | cli.main:setup_redis:669 - ✅ Connected to Redis cache
+2025-08-10 16:54:50.970 | INFO     | cli.main:setup_database:682 - ✅ Connected to database
+2025-08-10 16:54:50.970 | INFO     | cli.main:__init__:458 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 16:54:54.560 | ERROR    | cli.main:run:334 - OpenAI API error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-eeabb*******************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-10 16:54:56.975 | ERROR    | cli.main:run:334 - OpenAI API error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-eeabb*******************************************************3ffe. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-10 17:06:58.662 | INFO     | cli.main:setup_logging:600 - Logging system configured
+2025-08-10 17:06:59.821 | INFO     | cli.main:setup_web3:637 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:07:01.036 | INFO     | cli.main:setup_web3:637 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:07:01.949 | INFO     | cli.main:setup_web3:637 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:07:03.080 | INFO     | cli.main:setup_web3:637 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:07:03.081 | INFO     | cli.main:setup_llm_manager:669 - SpoonOS not available, will use direct API calls
+2025-08-10 17:07:03.081 | INFO     | cli.main:setup_tools:712 - ✅ Initialized 3 trading tools
+2025-08-10 17:07:03.137 | INFO     | cli.main:_initialize_fallback_agents:797 - ✅ Fallback agents initialized successfully
+2025-08-10 17:07:03.161 | INFO     | cli.main:setup_redis:677 - ✅ Connected to Redis cache
+2025-08-10 17:07:03.330 | INFO     | cli.main:setup_database:690 - ✅ Connected to database
+2025-08-10 17:07:03.330 | INFO     | cli.main:__init__:466 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:07:08.236 | INFO     | cli.main:execute:259 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-10 17:07:08.237 | INFO     | cli.main:execute:170 - Analyzing ethereum - whale_movements for timeframe 24h
+2025-08-10 17:07:08.237 | INFO     | cli.main:execute:217 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:07:08.237 | INFO     | cli.main:execute:170 - Analyzing ethereum - yield_farming for timeframe 24h
+2025-08-10 17:07:12.349 | INFO     | cli.main:execute:259 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-10 17:07:12.350 | INFO     | cli.main:execute:170 - Analyzing polygon - whale_movements for timeframe 24h
+2025-08-10 17:07:12.352 | INFO     | cli.main:execute:217 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:07:12.352 | INFO     | cli.main:execute:170 - Analyzing polygon - yield_farming for timeframe 24h
+2025-08-10 17:11:27.835 | INFO     | cli.main:setup_logging:600 - Logging system configured
+2025-08-10 17:11:28.873 | INFO     | cli.main:setup_web3:637 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:11:30.225 | INFO     | cli.main:setup_web3:637 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:11:31.263 | INFO     | cli.main:setup_web3:637 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:11:32.255 | INFO     | cli.main:setup_web3:637 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:11:32.255 | INFO     | cli.main:setup_llm_manager:669 - SpoonOS not available, will use direct API calls
+2025-08-10 17:11:32.255 | INFO     | cli.main:setup_tools:712 - ✅ Initialized 3 trading tools
+2025-08-10 17:11:32.467 | INFO     | cli.main:_initialize_fallback_agents:797 - ✅ Fallback agents initialized successfully
+2025-08-10 17:11:32.546 | INFO     | cli.main:setup_redis:677 - ✅ Connected to Redis cache
+2025-08-10 17:11:34.113 | INFO     | cli.main:setup_database:690 - ✅ Connected to database
+2025-08-10 17:11:34.115 | INFO     | cli.main:__init__:466 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:20:17.384 | INFO     | cli.main:setup_logging:600 - Logging system configured
+2025-08-10 17:20:18.337 | INFO     | cli.main:setup_web3:637 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:20:19.560 | INFO     | cli.main:setup_web3:637 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:20:20.542 | INFO     | cli.main:setup_web3:637 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:20:21.506 | INFO     | cli.main:setup_web3:637 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:20:21.506 | INFO     | cli.main:setup_llm_manager:669 - SpoonOS not available, will use direct API calls
+2025-08-10 17:20:21.507 | INFO     | cli.main:setup_tools:712 - ✅ Initialized 3 trading tools
+2025-08-10 17:20:21.719 | INFO     | cli.main:_initialize_fallback_agents:797 - ✅ Fallback agents initialized successfully
+2025-08-10 17:20:21.767 | INFO     | cli.main:setup_redis:677 - ✅ Connected to Redis cache
+2025-08-10 17:20:22.266 | INFO     | cli.main:setup_database:690 - ✅ Connected to database
+2025-08-10 17:20:22.266 | INFO     | cli.main:__init__:466 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:20:28.247 | INFO     | cli.main:execute:259 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-10 17:20:28.248 | INFO     | cli.main:execute:170 - Analyzing ethereum - whale_movements for timeframe 24h
+2025-08-10 17:20:28.248 | INFO     | cli.main:execute:217 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:20:28.248 | INFO     | cli.main:execute:170 - Analyzing ethereum - yield_farming for timeframe 24h
+2025-08-10 17:20:32.710 | INFO     | cli.main:execute:259 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-10 17:20:32.711 | INFO     | cli.main:execute:170 - Analyzing polygon - whale_movements for timeframe 24h
+2025-08-10 17:20:32.711 | INFO     | cli.main:execute:217 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:20:32.711 | INFO     | cli.main:execute:170 - Analyzing polygon - yield_farming for timeframe 24h
+2025-08-10 17:24:07.379 | INFO     | cli.main:setup_logging:600 - Logging system configured
+2025-08-10 17:24:08.208 | INFO     | cli.main:setup_web3:637 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:24:09.394 | INFO     | cli.main:setup_web3:637 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:24:10.180 | INFO     | cli.main:setup_web3:637 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:24:10.994 | INFO     | cli.main:setup_web3:637 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:24:10.994 | INFO     | cli.main:setup_llm_manager:669 - SpoonOS not available, will use direct API calls
+2025-08-10 17:24:10.994 | INFO     | cli.main:setup_tools:712 - ✅ Initialized 3 trading tools
+2025-08-10 17:24:11.254 | INFO     | cli.main:_initialize_fallback_agents:797 - ✅ Fallback agents initialized successfully
+2025-08-10 17:24:11.441 | INFO     | cli.main:setup_redis:677 - ✅ Connected to Redis cache
+2025-08-10 17:24:12.590 | INFO     | cli.main:setup_database:690 - ✅ Connected to database
+2025-08-10 17:24:12.590 | INFO     | cli.main:__init__:466 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:24:14.842 | INFO     | cli.main:execute:259 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-10 17:29:36.874 | INFO     | cli.main:setup_logging:600 - Logging system configured
+2025-08-10 17:29:37.813 | INFO     | cli.main:setup_web3:637 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:29:39.030 | INFO     | cli.main:setup_web3:637 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:29:39.912 | INFO     | cli.main:setup_web3:637 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:29:40.814 | INFO     | cli.main:setup_web3:637 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:29:40.814 | INFO     | cli.main:setup_llm_manager:669 - SpoonOS not available, will use direct API calls
+2025-08-10 17:29:40.815 | INFO     | cli.main:setup_tools:712 - ✅ Initialized 3 trading tools
+2025-08-10 17:29:41.094 | INFO     | cli.main:_initialize_fallback_agents:797 - ✅ Fallback agents initialized successfully
+2025-08-10 17:29:41.106 | INFO     | cli.main:setup_redis:677 - ✅ Connected to Redis cache
+2025-08-10 17:29:43.309 | INFO     | cli.main:setup_database:690 - ✅ Connected to database
+2025-08-10 17:29:43.309 | INFO     | cli.main:__init__:466 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:48:49.111 | INFO     | cli.main:setup_logging:606 - Logging system configured
+2025-08-10 17:48:50.003 | INFO     | cli.main:setup_web3:643 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:48:51.147 | INFO     | cli.main:setup_web3:643 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:48:52.010 | INFO     | cli.main:setup_web3:643 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-10 17:48:52.875 | INFO     | cli.main:setup_web3:643 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:48:52.876 | INFO     | cli.main:setup_llm_manager:675 - SpoonOS not available, will use direct API calls
+2025-08-10 17:48:52.876 | INFO     | cli.main:setup_tools:718 - ✅ Initialized 3 trading tools
+2025-08-10 17:48:52.945 | INFO     | cli.main:_initialize_fallback_agents:803 - ✅ Fallback agents initialized successfully
+2025-08-10 17:48:52.947 | INFO     | cli.main:setup_redis:683 - ✅ Connected to Redis cache
+2025-08-10 17:48:53.250 | INFO     | cli.main:setup_database:696 - ✅ Connected to database
+2025-08-10 17:48:53.251 | INFO     | cli.main:__init__:472 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:48:55.377 | INFO     | cli.main:execute:265 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-10 17:55:43.557 | INFO     | cli.main:setup_logging:597 - Logging system configured
+2025-08-10 17:55:47.362 | INFO     | cli.main:setup_web3:634 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-10 17:55:52.052 | INFO     | cli.main:setup_web3:634 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-10 17:56:31.847 | WARNING  | cli.main:setup_web3:638 - ⚠️ Failed to connect to bsc
+2025-08-10 17:56:40.871 | INFO     | cli.main:setup_web3:634 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-10 17:56:40.871 | INFO     | cli.main:setup_llm_manager:666 - SpoonOS not available, will use direct API calls
+2025-08-10 17:56:40.871 | INFO     | cli.main:setup_tools:709 - ✅ Initialized 3 trading tools
+2025-08-10 17:56:40.987 | INFO     | cli.main:_initialize_fallback_agents:794 - ✅ Fallback agents initialized successfully
+2025-08-10 17:56:41.002 | INFO     | cli.main:setup_redis:674 - ✅ Connected to Redis cache
+2025-08-10 17:56:41.105 | INFO     | cli.main:setup_database:687 - ✅ Connected to database
+2025-08-10 17:56:41.106 | INFO     | cli.main:__init__:463 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-10 17:56:50.260 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-10 17:56:50.261 | INFO     | cli.main:execute:167 - Analyzing ethereum - whale_movements for timeframe 24h
+2025-08-10 17:56:50.271 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:56:50.272 | INFO     | cli.main:execute:167 - Analyzing ethereum - yield_farming for timeframe 24h
+2025-08-10 17:56:56.410 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-10 17:56:56.410 | INFO     | cli.main:execute:167 - Analyzing polygon - whale_movements for timeframe 24h
+2025-08-10 17:56:56.410 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-10 17:56:56.410 | INFO     | cli.main:execute:167 - Analyzing polygon - yield_farming for timeframe 24h

@@ -1,17 +1,15 @@
 {
-    "api_keys": {
-      "openai": "sk-your-openai-api-key",
-      "anthropic": "sk-your-anthropic-api-key"
-    },
     "default_agent": "market_intelligence",
     "providers": {
       "openai": {
+        "api_key_env": "OPENAI_API_KEY",
         "model": "gpt-4-turbo",
         "temperature": 0.1,
         "max_tokens": 4096,
         "timeout": 30
       },
       "anthropic": {
+        "api_key_env": "ANTHROPIC_API_KEY",
         "model": "claude-3-5-sonnet-20241022",
         "temperature": 0.1,
         "max_tokens": 4096,
@@ -20,10 +18,7 @@
     },
     "llm_settings": {
       "default_provider": "openai",
-      "fallback_chain": ["openai", "anthropic"],
-      "enable_monitoring": true,
-      "enable_caching": true,
-      "max_concurrent_requests": 10
+      "model": "gpt-4.1"
     },
     "agents": {
       "market_intelligence": {
@@ -254,3 +249,4 @@
       "metrics_retention_days": 365
     }
   }
+  
