@@ -1,0 +1,45 @@
+2025-08-11 00:08:41.865 | INFO     | cli.main:setup_logging:995 - Logging system configured
+2025-08-11 00:08:42.903 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-11 00:08:44.196 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-11 00:08:57.365 | WARNING  | cli.main:setup_web3:1035 - ⚠️ Failed to connect to bsc
+2025-08-11 00:08:58.344 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-11 00:08:58.398 | INFO     | cli.main:_patch_chatbot_methods:329 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-11 00:08:58.398 | INFO     | cli.main:_build_openrouter_chatbot:793 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-11 00:08:58.398 | INFO     | cli.main:setup_tools:1121 - ✅ Initialized 3 trading tools
+2025-08-11 00:08:58.403 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 00:08:58.448 | INFO     | cli.main:setup_redis:1047 - ✅ Connected to Redis cache
+2025-08-11 00:08:58.591 | INFO     | cli.main:setup_database:1060 - ✅ Connected to database
+2025-08-11 00:08:58.592 | INFO     | cli.main:__init__:759 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-11 00:09:19.085 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-11 00:09:23.563 | ERROR    | cli.main:scan_markets:1348 - Error scanning ethereum: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-11 00:09:23.563 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-11 00:09:23.564 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 00:09:23.564 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.
+2025-08-11 00:09:27.007 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-11 00:09:31.220 | ERROR    | cli.main:scan_markets:1348 - Error scanning polygon: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-11 00:09:31.221 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-11 00:09:31.222 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 00:09:31.222 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.
+2025-08-11 08:24:46.796 | INFO     | cli.main:load_config:889 - Configuration loaded from config/config.json
+2025-08-11 08:24:46.906 | INFO     | cli.main:setup_logging:995 - Logging system configured
+2025-08-11 08:24:48.262 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-11 08:24:49.690 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-11 08:24:50.744 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-11 08:24:51.755 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-11 08:24:51.816 | INFO     | cli.main:_patch_chatbot_methods:329 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-11 08:24:51.816 | INFO     | cli.main:_build_openrouter_chatbot:793 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-11 08:24:51.823 | INFO     | cli.main:setup_tools:1121 - ✅ Initialized 3 trading tools
+2025-08-11 08:24:51.851 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 08:24:51.917 | INFO     | cli.main:setup_redis:1047 - ✅ Connected to Redis cache
+2025-08-11 08:24:52.383 | INFO     | cli.main:setup_database:1060 - ✅ Connected to database
+2025-08-11 08:24:52.383 | INFO     | cli.main:__init__:759 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-11 08:24:58.191 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-11 08:25:02.247 | ERROR    | cli.main:scan_markets:1348 - Error scanning ethereum: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-11 08:25:02.248 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-11 08:25:02.249 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 08:25:02.249 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.
+2025-08-11 08:25:08.706 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-11 08:25:13.109 | ERROR    | cli.main:scan_markets:1348 - Error scanning polygon: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-11 08:25:13.109 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-11 08:25:13.110 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-11 08:25:13.111 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.

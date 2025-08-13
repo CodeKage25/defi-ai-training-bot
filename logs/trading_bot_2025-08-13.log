@@ -1,0 +1,98 @@
+2025-08-13 10:33:36.906 | INFO     | cli.main:load_config:889 - Configuration loaded from config/config.json
+2025-08-13 10:33:37.861 | INFO     | cli.main:setup_logging:995 - Logging system configured
+2025-08-13 10:33:39.474 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 10:33:40.953 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 10:33:42.234 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 10:33:43.341 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 10:33:43.416 | INFO     | cli.main:_patch_chatbot_methods:329 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-13 10:33:43.416 | INFO     | cli.main:_build_openrouter_chatbot:793 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-13 10:33:43.424 | INFO     | cli.main:setup_tools:1121 - ✅ Initialized 3 trading tools
+2025-08-13 10:33:43.467 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-13 10:33:43.566 | INFO     | cli.main:setup_redis:1047 - ✅ Connected to Redis cache
+2025-08-13 10:33:44.139 | INFO     | cli.main:setup_database:1060 - ✅ Connected to database
+2025-08-13 10:33:44.139 | INFO     | cli.main:__init__:759 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 10:33:51.372 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-13 10:33:56.603 | ERROR    | cli.main:scan_markets:1348 - Error scanning ethereum: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-13 10:33:56.603 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-13 10:33:56.604 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-13 10:33:56.604 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.
+2025-08-13 10:34:01.413 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-13 10:34:05.808 | ERROR    | cli.main:scan_markets:1348 - Error scanning polygon: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\n  "error": {\n    "message": "Invalid value for \'content\': expected a string, got null.",\n    "type": "invalid_request_error",\n    "param": "messages.[3].content",\n    "code": null\n  }\n}', 'provider_name': 'OpenAI'}}, 'user_id': 'user_2yM9wGJVR94VswPkt1vT037MYaM'}
+2025-08-13 10:34:05.808 | WARNING  | cli.main:_recover_agents:1235 - Recovering agents after failure...
+2025-08-13 10:34:05.809 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-13 10:34:05.809 | INFO     | cli.main:_recover_agents:1241 - Agents recovered.
+2025-08-13 10:45:36.465 | INFO     | cli.main:load_config:889 - Configuration loaded from config/config.json
+2025-08-13 10:45:36.519 | INFO     | cli.main:setup_logging:995 - Logging system configured
+2025-08-13 10:45:37.751 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 10:45:39.044 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 10:45:40.327 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 10:45:41.563 | INFO     | cli.main:setup_web3:1031 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 10:45:41.719 | INFO     | cli.main:_patch_chatbot_methods:329 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-13 10:45:41.719 | INFO     | cli.main:_build_openrouter_chatbot:793 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-13 10:45:41.720 | INFO     | cli.main:setup_tools:1121 - ✅ Initialized 3 trading tools
+2025-08-13 10:45:41.724 | INFO     | cli.main:_initialize_spoonos_agents:1184 - ✅ SpoonOS agents initialized successfully
+2025-08-13 10:45:42.656 | INFO     | cli.main:setup_redis:1047 - ✅ Connected to Redis cache
+2025-08-13 10:45:43.030 | INFO     | cli.main:setup_database:1060 - ✅ Connected to database
+2025-08-13 10:45:43.087 | INFO     | cli.main:__init__:759 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 10:45:47.357 | DEBUG    | cli.main:add_message_patched:409 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-13 10:46:13.259 | INFO     | cli.main:setup_logging:597 - Logging system configured
+2025-08-13 10:46:14.611 | INFO     | cli.main:setup_web3:634 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 10:46:15.739 | INFO     | cli.main:setup_web3:634 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 10:46:16.770 | INFO     | cli.main:setup_web3:634 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 10:46:17.823 | INFO     | cli.main:setup_web3:634 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 10:46:17.824 | INFO     | cli.main:setup_llm_manager:666 - SpoonOS not available, will use direct API calls
+2025-08-13 10:46:17.824 | INFO     | cli.main:setup_tools:709 - ✅ Initialized 3 trading tools
+2025-08-13 10:46:18.065 | INFO     | cli.main:_initialize_fallback_agents:794 - ✅ Fallback agents initialized successfully
+2025-08-13 10:46:18.085 | INFO     | cli.main:setup_redis:674 - ✅ Connected to Redis cache
+2025-08-13 10:46:18.462 | INFO     | cli.main:setup_database:687 - ✅ Connected to database
+2025-08-13 10:46:18.464 | INFO     | cli.main:__init__:463 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 10:46:23.533 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-13 10:46:23.855 | INFO     | cli.main:execute:167 - Analyzing ethereum - whale_movements for timeframe 24h
+2025-08-13 10:46:23.855 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-13 10:46:23.856 | INFO     | cli.main:execute:167 - Analyzing ethereum - yield_farming for timeframe 24h
+2025-08-13 10:46:27.979 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-13 10:46:28.019 | INFO     | cli.main:execute:167 - Analyzing polygon - whale_movements for timeframe 24h
+2025-08-13 10:46:28.174 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-13 10:46:28.348 | INFO     | cli.main:execute:167 - Analyzing polygon - yield_farming for timeframe 24h
+2025-08-13 10:51:29.146 | INFO     | cli.main:setup_logging:597 - Logging system configured
+2025-08-13 10:51:30.205 | INFO     | cli.main:setup_web3:634 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 10:51:31.726 | INFO     | cli.main:setup_web3:634 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 10:51:32.972 | INFO     | cli.main:setup_web3:634 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 10:51:34.194 | INFO     | cli.main:setup_web3:634 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 10:51:34.195 | INFO     | cli.main:setup_llm_manager:666 - SpoonOS not available, will use direct API calls
+2025-08-13 10:51:34.195 | INFO     | cli.main:setup_tools:709 - ✅ Initialized 3 trading tools
+2025-08-13 10:51:34.420 | INFO     | cli.main:_initialize_fallback_agents:794 - ✅ Fallback agents initialized successfully
+2025-08-13 10:51:34.433 | INFO     | cli.main:setup_redis:674 - ✅ Connected to Redis cache
+2025-08-13 10:51:34.901 | INFO     | cli.main:setup_database:687 - ✅ Connected to database
+2025-08-13 10:51:34.902 | INFO     | cli.main:__init__:463 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 10:52:06.826 | INFO     | cli.main:setup_logging:597 - Logging system configured
+2025-08-13 10:52:09.250 | INFO     | cli.main:setup_web3:634 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 10:52:11.106 | INFO     | cli.main:setup_web3:634 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 10:52:12.941 | INFO     | cli.main:setup_web3:634 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 10:52:14.029 | INFO     | cli.main:setup_web3:634 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 10:52:14.029 | INFO     | cli.main:setup_llm_manager:666 - SpoonOS not available, will use direct API calls
+2025-08-13 10:52:14.029 | INFO     | cli.main:setup_tools:709 - ✅ Initialized 3 trading tools
+2025-08-13 10:52:14.088 | INFO     | cli.main:_initialize_fallback_agents:794 - ✅ Fallback agents initialized successfully
+2025-08-13 10:52:14.141 | INFO     | cli.main:setup_redis:674 - ✅ Connected to Redis cache
+2025-08-13 10:52:14.220 | INFO     | cli.main:setup_database:687 - ✅ Connected to database
+2025-08-13 10:52:14.220 | INFO     | cli.main:__init__:463 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 10:52:16.720 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-13 11:02:29.060 | INFO     | cli.main:setup_logging:597 - Logging system configured
+2025-08-13 11:02:30.282 | INFO     | cli.main:setup_web3:634 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-13 11:02:31.397 | INFO     | cli.main:setup_web3:634 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-13 11:02:32.518 | INFO     | cli.main:setup_web3:634 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-13 11:02:33.763 | INFO     | cli.main:setup_web3:634 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-13 11:02:33.763 | INFO     | cli.main:setup_llm_manager:666 - SpoonOS not available, will use direct API calls
+2025-08-13 11:02:33.763 | INFO     | cli.main:setup_tools:709 - ✅ Initialized 3 trading tools
+2025-08-13 11:02:33.826 | INFO     | cli.main:_initialize_fallback_agents:794 - ✅ Fallback agents initialized successfully
+2025-08-13 11:02:33.851 | INFO     | cli.main:setup_redis:674 - ✅ Connected to Redis cache
+2025-08-13 11:02:33.940 | INFO     | cli.main:setup_database:687 - ✅ Connected to database
+2025-08-13 11:02:33.940 | INFO     | cli.main:__init__:463 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-13 11:02:37.862 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-13 11:02:37.863 | INFO     | cli.main:execute:167 - Analyzing ethereum - whale_movements for timeframe 24h
+2025-08-13 11:02:37.863 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-13 11:02:37.864 | INFO     | cli.main:execute:167 - Analyzing ethereum - yield_farming for timeframe 24h
+2025-08-13 11:02:41.002 | INFO     | cli.main:execute:256 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-13 11:02:41.003 | INFO     | cli.main:execute:167 - Analyzing polygon - whale_movements for timeframe 24h
+2025-08-13 11:02:41.003 | INFO     | cli.main:execute:214 - Fetching prices for ['ETH', 'USDC'] in usd
+2025-08-13 11:02:41.003 | INFO     | cli.main:execute:167 - Analyzing polygon - token_flows for timeframe 24h

@@ -1,252 +1,307 @@
 {
-    "default_agent": "market_intelligence",
-    "providers": {
-      "openai": {
-        "api_key_env": "OPENAI_API_KEY",
-        "model": "gpt-4-turbo",
-        "temperature": 0.1,
-        "max_tokens": 4096,
-        "timeout": 30
-      },
-      "anthropic": {
-        "api_key_env": "ANTHROPIC_API_KEY",
-        "model": "claude-3-5-sonnet-20241022",
-        "temperature": 0.1,
-        "max_tokens": 4096,
-        "timeout": 30
-      }
+  "default_agent": "market_intelligence",
+  "providers": {
+    "openai": {
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4-turbo",
+      "temperature": 0.1,
+      "max_tokens": 4096,
+      "timeout": 30
     },
-    "llm_settings": {
-      "default_provider": "openai",
-      "model": "gpt-4.1"
-    },
-    "agents": {
-      "market_intelligence": {
-        "class": "SpoonReactMCP",
-        "description": "Multi-chain market intelligence and opportunity scanner",
-        "aliases": ["market", "scanner"],
-        "config": {
-          "max_steps": 15,
-          "tool_choice": "auto"
-        },
-        "tools": [
-          {
-            "name": "chainbase_analytics",
-            "type": "builtin",
-            "description": "On-chain analytics and transaction analysis",
-            "enabled": true,
-            "env": {
-              "CHAINBASE_API_KEY": "your-chainbase-api-key"
-            },
-            "config": {
-              "timeout": 30,
-              "max_retries": 3,
-              "supported_chains": ["ethereum", "polygon", "bsc", "arbitrum"]
-            }
-          },
-          {
-            "name": "price_aggregator",
-            "type": "builtin",
-            "description": "Multi-source price aggregation and comparison",
-            "enabled": true,
-            "env": {
-              "COINGECKO_API_KEY": "your-coingecko-api-key",
-              "COINMARKETCAP_API_KEY": "your-cmc-api-key"
-            },
-            "config": {
-              "update_interval": 5,
-              "price_sources": ["coingecko", "coinmarketcap", "dex_screener"]
-            }
-          },
-          {
-            "name": "dex_monitor",
-            "type": "builtin",
-            "description": "DEX liquidity and arbitrage opportunity monitoring",
-            "enabled": true,
-            "env": {
-              "ONEINCH_API_KEY": "your-1inch-api-key"
-            },
-            "config": {
-              "min_arbitrage_profit": 0.5,
-              "supported_dexs": ["uniswap", "sushiswap", "pancakeswap", "quickswap"]
-            }
-          }
-        ]
-      },
-      "risk_assessment": {
-        "class": "SpoonReactAI",
-        "description": "AI-powered risk analysis and portfolio management",
-        "aliases": ["risk", "portfolio"],
-        "config": {
-          "max_steps": 10,
-          "tool_choice": "auto"
-        },
-        "tools": [
-          {
-            "name": "smart_contract_analyzer",
-            "type": "builtin",
-            "description": "Smart contract security and risk assessment",
-            "enabled": true,
-            "config": {
-              "security_checks": ["reentrancy", "overflow", "access_control"],
-              "risk_threshold": 0.7
-            }
-          },
-          {
-            "name": "volatility_predictor",
-            "type": "builtin",
-            "description": "AI-powered volatility and price prediction",
-            "enabled": true,
-            "config": {
-              "prediction_horizon": "24h",
-              "confidence_threshold": 0.8,
-              "model_type": "lstm"
-            }
-          },
-          {
-            "name": "portfolio_optimizer",
-            "type": "builtin",
-            "description": "Portfolio allocation and risk optimization",
-            "enabled": true,
-            "config": {
-              "optimization_method": "modern_portfolio_theory",
-              "rebalance_frequency": "daily",
-              "max_allocation_per_asset": 0.2
-            }
-          }
-        ]
-      },
-      "execution_manager": {
-        "class": "SpoonReactMCP",
-        "description": "Trade execution and position management",
-        "aliases": ["executor", "trader"],
-        "config": {
-          "max_steps": 20,
-          "tool_choice": "auto"
-        },
-        "tools": [
-          {
-            "name": "dex_aggregator",
-            "type": "builtin",
-            "description": "Optimal trade execution across multiple DEXs",
-            "enabled": true,
-            "env": {
-              "ONEINCH_API_KEY": "your-1inch-api-key",
-              "PARASWAP_API_KEY": "your-paraswap-api-key"
-            },
-            "config": {
-              "slippage_tolerance": 0.01,
-              "gas_optimization": true,
-              "mev_protection": true
-            }
-          },
-          {
-            "name": "position_manager",
-            "type": "builtin",
-            "description": "Position tracking and management",
-            "enabled": true,
-            "config": {
-              "auto_stop_loss": true,
-              "take_profit_levels": [0.1, 0.2, 0.5],
-              "position_monitoring_interval": 30
-            }
-          },
-          {
-            "name": "gas_optimizer",
-            "type": "builtin",
-            "description": "Gas price optimization and transaction timing",
-            "enabled": true,
-            "config": {
-              "max_gas_price": 100,
-              "priority_fee_optimization": true,
-              "transaction_batching": true
-            }
-          }
-        ]
-      },
-      "yield_farmer": {
-        "class": "SpoonReactMCP",
-        "description": "Automated yield farming and liquidity mining",
-        "aliases": ["farmer", "yield"],
-        "config": {
-          "max_steps": 12,
-          "tool_choice": "auto"
-        },
-        "tools": [
-          {
-            "name": "yield_scanner",
-            "type": "builtin",
-            "description": "Cross-chain yield opportunity scanning",
-            "enabled": true,
-            "config": {
-              "min_apy_threshold": 0.05,
-              "max_risk_score": 0.6,
-              "protocols": ["compound", "aave", "curve", "convex", "yearn"]
-            }
-          },
-          {
-            "name": "liquidity_manager",
-            "type": "builtin",
-            "description": "Automated liquidity provision and management",
-            "enabled": true,
-            "config": {
-              "impermanent_loss_threshold": 0.02,
-              "rebalance_threshold": 0.05,
-              "auto_compound": true
-            }
-          }
-        ]
-      }
-    },
-    "trading_config": {
-      "risk_management": {
-        "max_portfolio_risk": 0.02,
-        "max_position_size": 0.1,
-        "stop_loss_percentage": 0.05,
-        "take_profit_percentage": 0.15,
-        "max_drawdown": 0.1
-      },
-      "execution": {
-        "min_trade_amount": 100,
-        "max_slippage": 0.01,
-        "gas_limit_multiplier": 1.2,
-        "transaction_timeout": 300,
-        "retry_attempts": 3
-      },
-      "chains": {
-        "ethereum": {
-          "chain_id": 1,
-          "enabled": true,
-          "gas_optimization": true,
-          "supported_dexs": ["uniswap_v3", "sushiswap", "curve"]
-        },
-        "polygon": {
-          "chain_id": 137,
-          "enabled": true,
-          "gas_optimization": false,
-          "supported_dexs": ["quickswap", "sushiswap", "curve"]
-        },
-        "bsc": {
-          "chain_id": 56,
-          "enabled": true,
-          "gas_optimization": false,
-          "supported_dexs": ["pancakeswap", "biswap", "mdex"]
-        },
-        "arbitrum": {
-          "chain_id": 42161,
-          "enabled": true,
-          "gas_optimization": true,
-          "supported_dexs": ["uniswap_v3", "sushiswap", "curve"]
-        }
-      }
-    },
-    "monitoring": {
-      "performance_tracking": true,
-      "real_time_alerts": true,
-      "telegram_notifications": true,
-      "discord_notifications": false,
-      "email_notifications": true,
-      "metrics_retention_days": 365
+    "anthropic": {
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "model": "claude-3-5-sonnet-20241022",
+      "temperature": 0.1,
+      "max_tokens": 4096,
+      "timeout": 30
     }
+  },
+  "llm_settings": {
+    "default_provider": "openai",
+    "model": "gpt-4.1"
+  },
+  "agents": {
+    "market_intelligence": {
+      "class": "SpoonReactMCP",
+      "description": "Multi-chain market intelligence and opportunity scanner",
+      "aliases": [
+        "market",
+        "scanner"
+      ],
+      "config": {
+        "max_steps": 15,
+        "tool_choice": "auto"
+      },
+      "tools": [
+        {
+          "name": "chainbase_analytics",
+          "type": "builtin",
+          "description": "On-chain analytics and transaction analysis",
+          "enabled": true,
+          "env": {
+            "CHAINBASE_API_KEY": "your-chainbase-api-key"
+          },
+          "config": {
+            "timeout": 30,
+            "max_retries": 3,
+            "supported_chains": [
+              "ethereum",
+              "polygon",
+              "bsc",
+              "arbitrum"
+            ]
+          }
+        },
+        {
+          "name": "price_aggregator",
+          "type": "builtin",
+          "description": "Multi-source price aggregation and comparison",
+          "enabled": true,
+          "env": {
+            "COINGECKO_API_KEY": "your-coingecko-api-key",
+            "COINMARKETCAP_API_KEY": "your-cmc-api-key"
+          },
+          "config": {
+            "update_interval": 5,
+            "price_sources": [
+              "coingecko",
+              "coinmarketcap",
+              "dex_screener"
+            ]
+          }
+        },
+        {
+          "name": "dex_monitor",
+          "type": "builtin",
+          "description": "DEX liquidity and arbitrage opportunity monitoring",
+          "enabled": true,
+          "env": {
+            "ONEINCH_API_KEY": "your-1inch-api-key"
+          },
+          "config": {
+            "min_arbitrage_profit": 0.5,
+            "supported_dexs": [
+              "uniswap",
+              "sushiswap",
+              "pancakeswap",
+              "quickswap"
+            ]
+          }
+        }
+      ]
+    },
+    "risk_assessment": {
+      "class": "SpoonReactAI",
+      "description": "AI-powered risk analysis and portfolio management",
+      "aliases": [
+        "risk",
+        "portfolio"
+      ],
+      "config": {
+        "max_steps": 10,
+        "tool_choice": "auto"
+      },
+      "tools": [
+        {
+          "name": "smart_contract_analyzer",
+          "type": "builtin",
+          "description": "Smart contract security and risk assessment",
+          "enabled": true,
+          "config": {
+            "security_checks": [
+              "reentrancy",
+              "overflow",
+              "access_control"
+            ],
+            "risk_threshold": 0.7
+          }
+        },
+        {
+          "name": "volatility_predictor",
+          "type": "builtin",
+          "description": "AI-powered volatility and price prediction",
+          "enabled": true,
+          "config": {
+            "prediction_horizon": "24h",
+            "confidence_threshold": 0.8,
+            "model_type": "lstm"
+          }
+        },
+        {
+          "name": "portfolio_optimizer",
+          "type": "builtin",
+          "description": "Portfolio allocation and risk optimization",
+          "enabled": true,
+          "config": {
+            "optimization_method": "modern_portfolio_theory",
+            "rebalance_frequency": "daily",
+            "max_allocation_per_asset": 0.2
+          }
+        }
+      ]
+    },
+    "execution_manager": {
+      "class": "SpoonReactMCP",
+      "description": "Trade execution and position management",
+      "aliases": [
+        "executor",
+        "trader"
+      ],
+      "config": {
+        "max_steps": 20,
+        "tool_choice": "auto"
+      },
+      "tools": [
+        {
+          "name": "dex_aggregator",
+          "type": "builtin",
+          "description": "Optimal trade execution across multiple DEXs",
+          "enabled": true,
+          "env": {
+            "ONEINCH_API_KEY": "your-1inch-api-key",
+            "PARASWAP_API_KEY": "your-paraswap-api-key"
+          },
+          "config": {
+            "slippage_tolerance": 0.01,
+            "gas_optimization": true,
+            "mev_protection": true
+          }
+        },
+        {
+          "name": "position_manager",
+          "type": "builtin",
+          "description": "Position tracking and management",
+          "enabled": true,
+          "config": {
+            "auto_stop_loss": true,
+            "take_profit_levels": [
+              0.1,
+              0.2,
+              0.5
+            ],
+            "position_monitoring_interval": 30
+          }
+        },
+        {
+          "name": "gas_optimizer",
+          "type": "builtin",
+          "description": "Gas price optimization and transaction timing",
+          "enabled": true,
+          "config": {
+            "max_gas_price": 100,
+            "priority_fee_optimization": true,
+            "transaction_batching": true
+          }
+        }
+      ]
+    },
+    "yield_farmer": {
+      "class": "SpoonReactMCP",
+      "description": "Automated yield farming and liquidity mining",
+      "aliases": [
+        "farmer",
+        "yield"
+      ],
+      "config": {
+        "max_steps": 12,
+        "tool_choice": "auto"
+      },
+      "tools": [
+        {
+          "name": "yield_scanner",
+          "type": "builtin",
+          "description": "Cross-chain yield opportunity scanning",
+          "enabled": true,
+          "config": {
+            "min_apy_threshold": 0.05,
+            "max_risk_score": 0.6,
+            "protocols": [
+              "compound",
+              "aave",
+              "curve",
+              "convex",
+              "yearn"
+            ]
+          }
+        },
+        {
+          "name": "liquidity_manager",
+          "type": "builtin",
+          "description": "Automated liquidity provision and management",
+          "enabled": true,
+          "config": {
+            "impermanent_loss_threshold": 0.02,
+            "rebalance_threshold": 0.05,
+            "auto_compound": true
+          }
+        }
+      ]
+    }
+  },
+  "trading_config": {
+    "risk_management": {
+      "max_portfolio_risk": 0.02,
+      "max_position_size": 0.1,
+      "stop_loss_percentage": 0.05,
+      "take_profit_percentage": 0.15,
+      "max_drawdown": 0.1
+    },
+    "execution": {
+      "min_trade_amount": 100,
+      "max_slippage": 0.01,
+      "gas_limit_multiplier": 1.2,
+      "transaction_timeout": 300,
+      "retry_attempts": 3
+    },
+    "chains": {
+      "ethereum": {
+        "chain_id": 1,
+        "enabled": true,
+        "gas_optimization": true,
+        "supported_dexs": [
+          "uniswap_v3",
+          "sushiswap",
+          "curve"
+        ]
+      },
+      "polygon": {
+        "chain_id": 137,
+        "enabled": true,
+        "gas_optimization": false,
+        "supported_dexs": [
+          "quickswap",
+          "sushiswap",
+          "curve"
+        ]
+      },
+      "bsc": {
+        "chain_id": 56,
+        "enabled": true,
+        "gas_optimization": false,
+        "supported_dexs": [
+          "pancakeswap",
+          "biswap",
+          "mdex"
+        ]
+      },
+      "arbitrum": {
+        "chain_id": 42161,
+        "enabled": true,
+        "gas_optimization": true,
+        "supported_dexs": [
+          "uniswap_v3",
+          "sushiswap",
+          "curve"
+        ]
+      }
+    }
+  },
+  "monitoring": {
+    "performance_tracking": true,
+    "real_time_alerts": true,
+    "telegram_notifications": true,
+    "discord_notifications": false,
+    "email_notifications": true,
+    "metrics_retention_days": 365
   }
-  
+}
