@@ -439,7 +439,7 @@ def _patch_spoon_baseagent_add_message():
 
     def add_message_patched(self, role: str, content: Optional[str] = None,
                             tool_calls: Optional[List[Any]] = None, *args, **kwargs):
-        # CRITICAL: Ensure content is ALWAYS a string, never None
+        
         content = _ensure_string_content(content)
         
         if role == "tool":
@@ -460,7 +460,7 @@ def _patch_spoon_baseagent_add_message():
             else:
                 content = f"Message from {role}"
         
-        # Special handling for tool role - always needs content
+        
         if role == "tool" and not content.strip():
             if tool_calls:
                 content = f"Tool executed: {len(tool_calls)} call(s)"
@@ -538,7 +538,7 @@ class ChainbaseAnalyticsTool(BaseTool):
         api_key = os.getenv("CHAINBASE_API_KEY")
         if not api_key:
             logger.warning("CHAINBASE_API_KEY not found, using mock data")
-            await asyncio.sleep(0.3)  # Simulate API call
+            await asyncio.sleep(0.3)  
 
         if analysis_type == "whale_movements":
             return {
@@ -860,12 +860,12 @@ class TradingBotOrchestrator:
             logger.warning("OpenRouter requested but no key set")
             return None
 
-        # Ensure envs for older ChatBot versions
+        
         os.environ.setdefault("OPENAI_API_KEY", key)
         os.environ["OPENAI_BASE_URL"] = OPENROUTER_BASE
 
         kwargs = dict(
-            llm_provider="openai",  # Spoon ChatBot uses 'openai' provider even when pointing to OpenRouter-compatible base
+            llm_provider="openai",  
             model_name=os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini"),
             api_key=key,
         )
@@ -1160,7 +1160,7 @@ class TradingBotOrchestrator:
             logger.warning(f"Database connection failed: {e}")
             return None
 
-    # ---------- Resilient agent constructor ----------
+    
     def _make_spoon_agent(self, cls, **kwargs):
         tools_manager = kwargs.pop("tools_manager", None)
         attempts = []
