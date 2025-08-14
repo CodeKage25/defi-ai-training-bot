@@ -1379,10 +1379,10 @@ Return ONLY this JSON (no markdown, no explanations):
 
             for chain in chains:
                 progress.update(task, description=f"Scanning {chain}...")
-                # Always attempt AI agent first, then tool-based fallback
+                
                 chain_ops: List[Dict[str, Any]] = []
                 
-                # Try AI agent scan first
+                
                 try:
                     if self.market_agent:
                         if hasattr(self.market_agent, "clear"):
@@ -1418,7 +1418,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                 except Exception as e:
                     logger.error(f"Unexpected error setting up agent scan for {chain}: {e}")
 
-                # Always run tool-based fallback to ensure we have some data
+               
                 try:
                     dm = await self.tools["dex_monitor"].execute(chain=chain, token_pair=["ETH", "USDC"], min_profit_bps=30)
                     for opp in dm.get("opportunities", []):
