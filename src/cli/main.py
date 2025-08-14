@@ -1414,7 +1414,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                             logger.info(f"AI agent found {len(chain_ops)} opportunities on {chain}")
                         except Exception as agent_err:
                             logger.error(f"Agent scan failed on {chain}: {agent_err}")
-                            # Continue to fallback below
+                            
                 except Exception as e:
                     logger.error(f"Unexpected error setting up agent scan for {chain}: {e}")
 
@@ -1439,7 +1439,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                 except Exception as _e:
                     logger.warning(f"Direct DEX monitor fallback failed for {chain}: {_e}")
 
-                # Final fallback if we have no opportunities at all
+                
                 if DEMO_MODE and not chain_ops:
                     chain_ops.append({
                         "id": f"{chain}_fallback_0",
@@ -1478,7 +1478,7 @@ Return a JSON response with opportunities array containing detailed analysis.
         if agent_result is None:
             return opportunities
 
-        # 1) Parse tool call results first (DEX monitor, price data, etc.)
+        
         if isinstance(agent_result, dict) and "tool_calls" in agent_result:
             for tool_call in agent_result["tool_calls"]:
                 if tool_call.get("tool") == "dex_monitor":
@@ -1503,7 +1503,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                     except Exception as e:
                         logger.warning(f"Failed to parse DEX monitor tool result: {e}")
 
-        # 2) Parse AI-generated content (the main response)
+        
         text_content = None
         if isinstance(agent_result, dict):
             text_content = agent_result.get("content") or agent_result.get("final_answer")
@@ -1515,7 +1515,7 @@ Return a JSON response with opportunities array containing detailed analysis.
         if text_content:
             logger.debug(f"Parsing AI content for {chain}: {text_content[:200]}...")
             
-            # Try to extract JSON from the text
+            
             extracted_json = _extract_json_from_text(text_content)
             if extracted_json:
                 opps = _validate_opportunities(extracted_json)
@@ -1541,12 +1541,12 @@ Return a JSON response with opportunities array containing detailed analysis.
                 else:
                     logger.debug(f"JSON found but no valid opportunities array for {chain}")
             else:
-                # If no structured JSON found, try to parse opportunities from text
+                
                 logger.debug(f"No JSON found, attempting text parsing for {chain}")
                 
-                # Look for opportunity-like patterns in the text
+                
                 if any(keyword in text_content.lower() for keyword in ["arbitrage", "opportunity", "profit", "yield"]):
-                    # Create a synthetic opportunity based on the text analysis
+                    
                     profit_match = re.search(r'[\$]?(\d+\.?\d*)', text_content)
                     profit = float(profit_match.group(1)) if profit_match else np.random.uniform(100, 500)
                     
@@ -1832,7 +1832,7 @@ Return a short, clear plan (no markdown).
             )
         console.print(table)
         
-        # Show breakdown by source
+        
         ai_ops = [opp for opp in opportunities if opp.get("source") == "ai_agent"]
         dex_ops = [opp for opp in opportunities if opp.get("source") in ["dex_monitor", "dex_monitor_ai"]]
         
