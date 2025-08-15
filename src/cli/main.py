@@ -2,7 +2,6 @@
 DeFi AI Trading Bot - Fixed Implementation with Real SpoonOS Agents
 Complete implementation with proper SpoonOS agent integration
 """
-
 import asyncio
 import click
 import json
@@ -14,8 +13,6 @@ from datetime import datetime
 import signal
 import re
 import os
-
-
 import warnings
 try:
     from pydantic.warnings import PydanticDeprecatedSince211
@@ -32,8 +29,6 @@ warnings.filterwarnings(
     category=DeprecationWarning,
     module=r"spoon_ai\.tools\.base"
 )
-
-
 # Rich CLI
 from rich.console import Console
 from rich.table import Table
@@ -42,38 +37,32 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
 from rich.layout import Layout
 from rich.live import Live
 from rich.prompt import Prompt, Confirm
-
 # Logging
 from loguru import logger
-
 # Data
 import numpy as np
 import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-
 # Env & pydantic
 from dotenv import load_dotenv
-from pydantic import Field 
-
+from pydantic import Field
 try:
     from openai import OpenAI, AsyncOpenAI
     OPENAI_AVAILABLE = True
 except Exception:
     OPENAI_AVAILABLE = False
-    AsyncOpenAI = None  # type: ignore
-
-
+    AsyncOpenAI = None # type: ignore
 try:
     from web3 import Web3
     from eth_account import Account
     try:
-        from web3.middleware import geth_poa_middleware  # v5
+        from web3.middleware import geth_poa_middleware # v5
         POA_MIDDLEWARE = geth_poa_middleware
     except ImportError:
         try:
-            from web3.middleware.proof_of_authority import ExtraDataToPOAMiddleware  # v6
+            from web3.middleware.proof_of_authority import ExtraDataToPOAMiddleware # v6
             POA_MIDDLEWARE = ExtraDataToPOAMiddleware
         except ImportError:
             POA_MIDDLEWARE = None
@@ -85,17 +74,14 @@ except ImportError as e:
     Web3 = None
     Account = None
     POA_MIDDLEWARE = None
-
-
 try:
     import importlib
     mw = importlib.import_module("web3.middleware")
     if not hasattr(mw, "geth_poa_middleware"):
         from web3.middleware.proof_of_authority import ExtraDataToPOAMiddleware as _ExtraPOA
-        mw.geth_poa_middleware = _ExtraPOA  # type: ignore[attr-defined]
+        mw.geth_poa_middleware = _ExtraPOA # type: ignore[attr-defined]
 except Exception:
     pass
-
 try:
     from spoon_ai.agents import SpoonReactAI
     from spoon_ai.chat import ChatBot
@@ -107,11 +93,9 @@ try:
 except ImportError as e:
     logger.warning(f"SpoonOS not available: {e}")
     SPOONOS_AVAILABLE = False
-    ChatBot = None  
-    ToolManager = None  
-    _SPOON_BASETOOL = None  
-
-
+    ChatBot = None
+    ToolManager = None
+    _SPOON_BASETOOL = None
 def _patch_spoon_basetool_model_fields_deprec():
     if not SPOONOS_AVAILABLE:
         return
@@ -124,7 +108,7 @@ def _patch_spoon_basetool_model_fields_deprec():
                 except Exception:
                     return getattr(type(self), "model_fields", {})
             if not isinstance(getattr(sbase.BaseTool, "model_fields", None), property):
-                sbase.BaseTool.model_fields = property(_mf)  # type: ignore
+                sbase.BaseTool.model_fields = property(_mf) # type: ignore
         except Exception:
             pass
         if not getattr(sbase.BaseTool, "__mf_shim__", False):
@@ -133,15 +117,12 @@ def _patch_spoon_basetool_model_fields_deprec():
                 if name == "model_fields":
                     return type(self).model_fields
                 return _orig_getattribute(self, name)
-            sbase.BaseTool.__getattribute__ = _ga  
-            sbase.BaseTool.__mf_shim__ = True  
+            sbase.BaseTool.__getattribute__ = _ga
+            sbase.BaseTool.__mf_shim__ = True
     except Exception:
         pass
-
 _patch_spoon_basetool_model_fields_deprec()
-
-
-from pydantic.fields import FieldInfo  
+from pydantic.fields import FieldInfo
 try:
     _bt = _SPOON_BASETOOL
     if _bt is None:
@@ -151,7 +132,6 @@ except Exception:
         name: str = "base_tool"
         description: str = ""
         parameters: Dict[str, Any] = {}
-
         def __init_subclass__(cls):
             for k, v in list(cls.__dict__.items()):
                 if isinstance(v, FieldInfo):
@@ -159,23 +139,17 @@ except Exception:
                         setattr(cls, k, v.default_factory())
                     else:
                         setattr(cls, k, v.default)
-
         async def execute(self, **kwargs) -> Dict[str, Any]:
             raise NotImplementedError("Tool must implement execute()")
-
-BaseTool = SpoonBaseTool  
-
+BaseTool = SpoonBaseTool
 # Async utils
 from asyncio import Event
-
-
 try:
     import redis
     REDIS_AVAILABLE = True
 except ImportError:
     redis = None
     REDIS_AVAILABLE = False
-
 try:
     from sqlalchemy import create_engine, text
     from sqlalchemy.orm import sessionmaker
@@ -184,36 +158,23 @@ except ImportError:
     create_engine = None
     sessionmaker = None
     SQLALCHEMY_AVAILABLE = False
-
 # Load env
 load_dotenv()
-
-
 console = Console()
-
-
 shutdown_event = Event()
-
-
 DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
-
-
 OPENROUTER_BASE = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-
-
 def is_openrouter_enabled() -> bool:
     ok = (os.getenv("OPENAI_API_KEY") or "").strip()
     if ok.startswith("sk-or-"):
         return True
     return bool((os.getenv("OPENROUTER_API_KEY") or "").strip())
-
 def get_openrouter_key() -> Optional[str]:
     k = (os.getenv("OPENAI_API_KEY") or "").strip()
     if k.startswith("sk-or-"):
         return k
     k2 = (os.getenv("OPENROUTER_API_KEY") or "").strip()
     return k2 or None
-
 def choose_model(default_openai: str = "gpt-4o-mini") -> str:
     if is_openrouter_enabled():
         # Allow specifying either OpenAI or Anthropic models through OpenRouter
@@ -221,14 +182,13 @@ def choose_model(default_openai: str = "gpt-4o-mini") -> str:
     # Direct OpenAI/Anthropic selection if using native APIs (not OpenRouter)
     return os.getenv("OPENAI_MODEL", default_openai)
 # ----------------------------------------------------------------------------
-
 # ----------------------------- Tool-call sanitizing -----------------------------
 class _ResponseShim:
     """Minimal interface Spoon agents use: `.content` and `.tool_calls`."""
     def __init__(self, content: Optional[str], tool_calls: Optional[List[Any]]):
         self.content = self._ensure_string_content(content)
         self.tool_calls = tool_calls or []
-    
+  
     def _ensure_string_content(self, content: Any) -> str:
         """Ensure content is always a string, never None"""
         if content is None:
@@ -239,14 +199,12 @@ class _ResponseShim:
             return str(content)
         except Exception:
             return ""
-
 class _ToolCallLite:
     """Small object with .id, .type, .function (dict) so Spoon's code can do attribute access."""
     def __init__(self, _id: Optional[str], _type: str, function: Dict[str, Any]):
         self.id = _id
         self.type = _type
-        self.function = function  # {"name": str, "arguments": str}
-
+        self.function = function # {"name": str, "arguments": str}
 def _force_function_dict(func_obj: Any) -> Dict[str, Any]:
     if isinstance(func_obj, dict):
         name = func_obj.get("name")
@@ -265,20 +223,17 @@ def _force_function_dict(func_obj: Any) -> Dict[str, Any]:
         except Exception:
             args = "{}"
     return {"name": name, "arguments": args}
-
 def _allowed_tool_names_from(owner: Any) -> Optional[set]:
     try:
         return set(getattr(owner, "_allowed_tool_names", []) or [])
     except Exception:
         return None
-
 def _sanitize_tool_calls(raw_tool_calls: Any, owner: Any = None) -> List[Any]:
     if not raw_tool_calls:
         return []
     allowed: Optional[set] = None
     if owner is not None:
         allowed = _allowed_tool_names_from(owner)
-
     out: List[Any] = []
     try:
         for tc in raw_tool_calls:
@@ -302,7 +257,6 @@ def _sanitize_tool_calls(raw_tool_calls: Any, owner: Any = None) -> List[Any]:
             return cleaned
         except Exception:
             return []
-
 def _extract_content_and_tool_calls(resp: Any, owner: Any = None) -> _ResponseShim:
     content = getattr(resp, "content", None)
     tool_calls = getattr(resp, "tool_calls", None)
@@ -315,7 +269,6 @@ def _extract_content_and_tool_calls(resp: Any, owner: Any = None) -> _ResponseSh
             pass
     sanitized = _sanitize_tool_calls(tool_calls, owner=owner)
     return _ResponseShim(content, sanitized)
-
 def _patch_chatbot_methods(bot: Any) -> Any:
     import types
     method_names = [n for n in ("chat", "generate", "create", "completion",
@@ -334,22 +287,17 @@ def _patch_chatbot_methods(bot: Any) -> Any:
             setattr(bot, name, types.MethodType(wrapper, bot))
     logger.info("🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents")
     return bot
-
-
-
 def _patch_spoon_baseagent_add_message():
     try:
         import importlib, types
         base_mod = importlib.import_module("spoon_ai.agents.base")
         orig = base_mod.BaseAgent.add_message
     except Exception:
-        return  # SpoonOS not installed; nothing to patch
-
+        return # SpoonOS not installed; nothing to patch
     # Mode: "strip" (drop all tool_calls) or "sanitize" (filter + dict-ify)
     default_mode = os.getenv("SPOON_TOOLCALL_MODE", "").strip().lower()
     if not default_mode:
         default_mode = "strip" if is_openrouter_enabled() else "sanitize"
-
     def _collect_allowed(agent: Any) -> Optional[set]:
         names = set()
         # try finding ToolManager or container inside the agent
@@ -380,7 +328,7 @@ def _patch_spoon_baseagent_add_message():
                         names.add(n)
             except Exception:
                 pass
-        
+      
         try:
             names |= set(getattr(agent, "_allowed_tool_names", []) or [])
         except Exception:
@@ -392,11 +340,10 @@ def _patch_spoon_baseagent_add_message():
         except Exception:
             pass
         return names or None
-
     def _ensure_string_content(content: Any) -> str:
         """CRITICAL: Force a string; OpenAI chat.completions requires content to be string for ALL providers"""
         if content is None:
-            return ""  # Never return None!
+            return "" # Never return None!
         if isinstance(content, str):
             return content
         if isinstance(content, (dict, list)):
@@ -408,7 +355,7 @@ def _patch_spoon_baseagent_add_message():
             return str(content)
         except Exception:
             return ""
-        
+      
     def _has_recent_tool_calls(agent_self) -> bool:
            """Check if the last assistant message had tool_calls"""
            try:
@@ -425,29 +372,28 @@ def _patch_spoon_baseagent_add_message():
                        else:
                            break
                     # else:
-                    #     role = getattr(msg, "role", None)
-                    #     if role == "assistant":
-                    #         return bool(getattr(msg, "tool_calls", None))
-                    #     elif role == "tool":
-                    #         continue
-                    #     else:
-                    #         break
-                
+                    # role = getattr(msg, "role", None)
+                    # if role == "assistant":
+                    # return bool(getattr(msg, "tool_calls", None))
+                    # elif role == "tool":
+                    # continue
+                    # else:
+                    # break
+              
            except Exception:
                return False
-                           
-
+                         
     def add_message_patched(self, role: str, content: Optional[str] = None,
                             tool_calls: Optional[List[Any]] = None, *args, **kwargs):
-        
+      
         content = _ensure_string_content(content)
-        
+      
         if role == "tool":
             if not _has_recent_tool_calls(self):
                 logger.debug("🛑 Skipping tool message - no recent tool_calls found")
                 return
-        
-        
+      
+      
         if not content:
             if role == "system":
                 content = "System message"
@@ -459,17 +405,17 @@ def _patch_spoon_baseagent_add_message():
                 content = "Tool execution result"
             else:
                 content = f"Message from {role}"
-        
-        
+      
+      
         if role == "tool" and not content.strip():
             if tool_calls:
                 content = f"Tool executed: {len(tool_calls)} call(s)"
             else:
                 content = "Tool executed successfully"
-        
+      
         mode = default_mode
         safe_calls = None
-        
+      
         if tool_calls and mode != "strip":
             allowed = _collect_allowed(self)
             safe_calls = []
@@ -487,29 +433,22 @@ def _patch_spoon_baseagent_add_message():
                 safe_calls = []
         elif mode == "strip" and tool_calls:
             logger.debug("🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)")
-            safe_calls = None  # drop entirely
-
+            safe_calls = None # drop entirely
         # FINAL SAFETY CHECK: Ensure we never pass None content
         if content is None:
             content = "Empty message"
-            
+          
         logger.debug(f"Adding message: role={role}, content_len={len(content)}, has_tool_calls={bool(safe_calls)}")
-
         if mode == "strip":
             return orig(self, role, content, tool_calls=None, *args, **kwargs)
         else:
             return orig(self, role, content, tool_calls=safe_calls, *args, **kwargs)
-
     try:
         base_mod.BaseAgent.add_message = add_message_patched
         logger.info(f"🛡️ Patched BaseAgent.add_message (mode={default_mode}) with CRITICAL null content guard")
     except Exception as e:
         logger.error(f"Failed to patch BaseAgent.add_message: {e}")
-
 _patch_spoon_baseagent_add_message()
-
-
-
 class ChainbaseAnalyticsTool(BaseTool):
     """On-chain analytics and transaction analysis using Chainbase"""
     name: str = "chainbase_analytics"
@@ -526,7 +465,6 @@ class ChainbaseAnalyticsTool(BaseTool):
             "required": ["chain", "analysis_type"],
         }
     )
-
     async def execute(
         self,
         chain: str,
@@ -538,8 +476,7 @@ class ChainbaseAnalyticsTool(BaseTool):
         api_key = os.getenv("CHAINBASE_API_KEY")
         if not api_key:
             logger.warning("CHAINBASE_API_KEY not found, using mock data")
-            await asyncio.sleep(0.3)  
-
+            await asyncio.sleep(0.3)
         if analysis_type == "whale_movements":
             return {
                 "chain": chain,
@@ -563,8 +500,6 @@ class ChainbaseAnalyticsTool(BaseTool):
                 },
             }
         return {"analysis": analysis_type, "status": "completed", "data": {}}
-
-
 class PriceAggregatorTool(BaseTool):
     """Multi-source price aggregation and comparison"""
     name: str = "price_aggregator"
@@ -584,7 +519,6 @@ class PriceAggregatorTool(BaseTool):
             "required": ["tokens"],
         }
     )
-
     async def execute(
         self,
         tokens: List[str],
@@ -614,8 +548,6 @@ class PriceAggregatorTool(BaseTool):
             "sources_used": sources or ["coingecko"],
             "timestamp": datetime.now().isoformat(),
         }
-
-
 class DEXMonitorTool(BaseTool):
     """DEX liquidity and arbitrage opportunity monitoring"""
     name: str = "dex_monitor"
@@ -632,7 +564,6 @@ class DEXMonitorTool(BaseTool):
             "required": ["chain", "token_pair"],
         }
     )
-
     async def execute(
         self,
         chain: str,
@@ -648,11 +579,10 @@ class DEXMonitorTool(BaseTool):
             "arbitrum": ["uniswap_v3", "sushiswap", "curve"],
         }
         dexs = dexs or default_dexs.get(chain, ["uniswap_v3"])
-
-        
+      
         low = int(max(1, min(min_profit_bps, 199)))
         high = 200
-        num = int(np.random.randint(1, 3))  # 1..2
+        num = int(np.random.randint(1, 3)) # 1..2
         opportunities = []
         for _ in range(num):
             profit_bps = int(np.random.randint(low, high))
@@ -675,8 +605,612 @@ class DEXMonitorTool(BaseTool):
             "dexs_monitored": dexs,
             "min_profit_threshold_bps": min_profit_bps,
         }
--
-
+class RealOnChainExecutor:
+    """Handles real on-chain trade execution with actual transaction hashes"""
+  
+    def __init__(self, web3_connections: Dict[str, Web3], private_key: str):
+        self.web3_connections = web3_connections
+        self.account = Account.from_key(private_key)
+        self.address = self.account.address
+      
+        # Real DEX router addresses (mainnet)
+        self.dex_routers = {
+            "ethereum": {
+                "uniswap_v3": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+                "uniswap_v2": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+                "sushiswap": "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+                "1inch": "0x1111111254EEB25477B68fb85Ed929f73A960582"
+            },
+            "polygon": {
+                "quickswap": "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff",
+                "sushiswap": "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
+                "uniswap_v3": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+            },
+            "arbitrum": {
+                "uniswap_v3": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+                "sushiswap": "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
+                "camelot": "0xc873fEcbd354f5A56E00E710B90EF4201db2448d"
+            },
+            "bsc": {
+                "pancakeswap": "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+                "biswap": "0x3a6d8cA21D1CF76F653A67577FA0D27453350dD8",
+                "mdex": "0x7DAe51BD3E3376B8c7c4900E9107f12Be3AF1bA8"
+            }
+        }
+      
+        # Real token addresses
+        self.token_registry = {
+            "ethereum": {
+                "ETH": "0x0000000000000000000000000000000000000000",
+                "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+                "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+                "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+                "WBTC": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+                "UNI": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "LINK": "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+            },
+            "polygon": {
+                "MATIC": "0x0000000000000000000000000000000000000000",
+                "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+                "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+                "USDT": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+                "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+                "WETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+                "QUICK": "0x831753DD7087CaC61aB5644b308642cc1c33Dc13"
+            },
+            "arbitrum": {
+                "ETH": "0x0000000000000000000000000000000000000000",
+                "WETH": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+                "USDC": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "USDT": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "DAI": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+                "WBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+                "ARB": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+            },
+            "bsc": {
+                "BNB": "0x0000000000000000000000000000000000000000",
+                "WBNB": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+                "USDT": "0x55d398326f99059fF775485246999027B3197955",
+                "USDC": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+                "BUSD": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+                "CAKE": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+            }
+        }
+      
+        # ERC20 ABI for token interactions
+        self.erc20_abi = [
+            {
+                "constant": True,
+                "inputs": [{"name": "_owner", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "balance", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "_spender", "type": "address"},
+                    {"name": "_value", "type": "uint256"}
+                ],
+                "name": "approve",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [
+                    {"name": "_owner", "type": "address"},
+                    {"name": "_spender", "type": "address"}
+                ],
+                "name": "allowance",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{"name": "", "type": "uint8"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [{"name": "", "type": "string"}],
+                "type": "function"
+            }
+        ]
+        # Uniswap V2 Router ABI (simplified)
+        self.uniswap_v2_abi = [
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "amountIn", "type": "uint256"},
+                    {"name": "amountOutMin", "type": "uint256"},
+                    {"name": "path", "type": "address[]"},
+                    {"name": "to", "type": "address"},
+                    {"name": "deadline", "type": "uint256"}
+                ],
+                "name": "swapExactTokensForTokens",
+                "outputs": [{"name": "amounts", "type": "uint256[]"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "amountOutMin", "type": "uint256"},
+                    {"name": "path", "type": "address[]"},
+                    {"name": "to", "type": "address"},
+                    {"name": "deadline", "type": "uint256"}
+                ],
+                "name": "swapExactETHForTokens",
+                "outputs": [{"name": "amounts", "type": "uint256[]"}],
+                "type": "function",
+                "payable": True
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "amountIn", "type": "uint256"},
+                    {"name": "amountOutMin", "type": "uint256"},
+                    {"name": "path", "type": "address[]"},
+                    {"name": "to", "type": "address"},
+                    {"name": "deadline", "type": "uint256"}
+                ],
+                "name": "swapExactTokensForETH",
+                "outputs": [{"name": "amounts", "type": "uint256[]"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [
+                    {"name": "amountIn", "type": "uint256"},
+                    {"name": "path", "type": "address[]"}
+                ],
+                "name": "getAmountsOut",
+                "outputs": [{"name": "amounts", "type": "uint256[]"}],
+                "type": "function"
+            }
+        ]
+    async def execute_real_trade(
+        self,
+        token_in: str,
+        token_out: str,
+        amount: float,
+        chain: str = "ethereum",
+        dex: str = "uniswap_v2"
+    ) -> Dict[str, Any]:
+        """Execute a real on-chain trade and return actual transaction hash"""
+      
+        if chain not in self.web3_connections:
+            raise ValueError(f"Chain {chain} not connected")
+          
+        web3 = self.web3_connections[chain]
+      
+        # Get token addresses
+        token_in_address = self.token_registry[chain].get(token_in.upper(), None)
+        if token_in_address is None:
+            raise ValueError(f"Token {token_in} not found on {chain}")
+        token_out_address = self.token_registry[chain].get(token_out.upper(), None)
+        if token_out_address is None:
+            raise ValueError(f"Token {token_out} not found on {chain}")
+      
+        console.print(f"\n[bold red]🔥 EXECUTING REAL ON-CHAIN TRADE[/bold red]")
+        console.print(f"Chain: {chain.upper()}")
+        console.print(f"DEX: {dex}")
+        console.print(f"Trade: {amount} {token_in} → {token_out}")
+        console.print(f"Wallet: {self.address}")
+      
+        try:
+            # Step 1: Check balances
+            balance_check = await self._check_balances(
+                web3, token_in_address, amount, token_in
+            )
+          
+            if not balance_check["sufficient"]:
+                return {
+                    "status": "failed",
+                    "error": f"Insufficient {token_in} balance",
+                    "required": amount,
+                    "available": balance_check["balance"],
+                    "wallet": self.address
+                }
+          
+            console.print(f"✅ Balance check passed: {balance_check['balance']:.6f} {token_in}")
+          
+            # Step 2: Approve token spending (if needed)
+            approval_tx = None
+            if token_in_address != "0x0000000000000000000000000000000000000000":
+                approval_tx = await self._approve_token_if_needed(
+                    web3, token_in_address, amount, chain, dex
+                )
+                if approval_tx:
+                    console.print(f"✅ Token approval: {approval_tx['hash'].hex()}")
+          
+            # Step 3: Execute the swap
+            console.print("🔄 Executing swap transaction...")
+            swap_result = await self._execute_swap_transaction(
+                web3=web3,
+                token_in_address=token_in_address,
+                token_out_address=token_out_address,
+                amount=amount,
+                chain=chain,
+                dex=dex,
+                token_in_symbol=token_in,
+                token_out_symbol=token_out
+            )
+          
+            # Calculate actual amounts
+            actual_amount_out = await self._calculate_received_amount(
+                web3, token_out_address, swap_result['receipt'], token_out
+            )
+          
+            result = {
+                "status": "executed",
+                "transaction_hash": swap_result["hash"].hex(),
+                "block_number": swap_result["receipt"].blockNumber,
+                "gas_used": swap_result["receipt"].gasUsed,
+                "gas_price": swap_result["receipt"].effectiveGasPrice,
+                "gas_cost_eth": float(web3.from_wei(
+                    swap_result["receipt"].gasUsed * swap_result["receipt"].effectiveGasPrice,
+                    'ether'
+                )),
+                "approval_tx": approval_tx["hash"].hex() if approval_tx else None,
+                "token_in": token_in,
+                "token_out": token_out,
+                "amount_in": amount,
+                "amount_out": actual_amount_out,
+                "chain": chain,
+                "dex_used": dex,
+                "timestamp": datetime.now().isoformat(),
+                "explorer_url": self._get_explorer_url(chain, swap_result["hash"].hex()),
+                "wallet_address": self.address,
+                "slippage": self._calculate_slippage(amount, actual_amount_out, token_in, token_out)
+            }
+          
+            console.print(f"\n[bold green]🎉 TRADE EXECUTED SUCCESSFULLY![/bold green]")
+            console.print(f"Transaction: {result['transaction_hash']}")
+            console.print(f"Explorer: {result['explorer_url']}")
+            console.print(f"Gas Used: {result['gas_used']:,} ({result['gas_cost_eth']:.6f} ETH)")
+            console.print(f"Output: {actual_amount_out:.6f} {token_out}")
+          
+            return result
+          
+        except Exception as e:
+            console.print(f"[bold red]❌ TRADE FAILED: {str(e)}[/bold red]")
+            return {
+                "status": "failed",
+                "error": str(e),
+                "token_in": token_in,
+                "token_out": token_out,
+                "chain": chain,
+                "wallet": self.address
+            }
+    async def _check_balances(
+        self, web3: Web3, token_address: str, required_amount: float, symbol: str
+    ) -> Dict[str, Any]:
+        """Check if wallet has sufficient token balance"""
+        try:
+            if token_address == "0x0000000000000000000000000000000000000000":
+                # Native token (ETH/MATIC/BNB)
+                balance_wei = web3.eth.get_balance(self.address)
+                balance = float(web3.from_wei(balance_wei, 'ether'))
+            else:
+                # ERC20 token
+                token_contract = web3.eth.contract(
+                    address=token_address,
+                    abi=self.erc20_abi
+                )
+                decimals = token_contract.functions.decimals().call()
+                balance_raw = token_contract.functions.balanceOf(self.address).call()
+                balance = float(balance_raw) / (10 ** decimals)
+          
+            return {
+                "sufficient": balance >= required_amount,
+                "balance": balance,
+                "required": required_amount,
+                "symbol": symbol
+            }
+          
+        except Exception as e:
+            return {"sufficient": False, "error": str(e), "balance": 0}
+    async def _approve_token_if_needed(
+        self, web3: Web3, token_address: str, amount: float, chain: str, dex: str
+    ) -> Optional[Dict[str, Any]]:
+        """Approve token spending if needed, return transaction receipt"""
+      
+        try:
+            token_contract = web3.eth.contract(
+                address=token_address,
+                abi=self.erc20_abi
+            )
+          
+            # Get router address for approval
+            router_address = self.dex_routers[chain][dex]
+          
+            # Check current allowance
+            current_allowance = token_contract.functions.allowance(
+                self.address, router_address
+            ).call()
+          
+            decimals = token_contract.functions.decimals().call()
+            required_amount_wei = int(amount * (10 ** decimals))
+          
+            if current_allowance >= required_amount_wei:
+                return None # Already approved
+          
+            console.print(f"🔐 Approving {amount} tokens for {dex}...")
+          
+            # Build approval transaction
+            approve_txn = token_contract.functions.approve(
+                router_address,
+                required_amount_wei * 10 # Approve 10x to reduce future approvals
+            ).build_transaction({
+                'from': self.address,
+                'gas': 60000, # Standard approval gas
+                'gasPrice': int(web3.eth.gas_price * 1.1), # 10% above current
+                'nonce': web3.eth.get_transaction_count(self.address)
+            })
+          
+            # Sign and send
+            signed_txn = web3.eth.account.sign_transaction(approve_txn, self.account.key)
+            tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+          
+            # Wait for confirmation
+            receipt = web3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
+          
+            if receipt.status != 1:
+                raise Exception(f"Approval transaction failed: {tx_hash.hex()}")
+          
+            return {
+                "hash": tx_hash,
+                "receipt": receipt,
+                "status": "approved"
+            }
+          
+        except Exception as e:
+            raise Exception(f"Token approval failed: {e}")
+    async def _execute_swap_transaction(
+        self,
+        web3: Web3,
+        token_in_address: str,
+        token_out_address: str,
+        amount: float,
+        chain: str,
+        dex: str,
+        token_in_symbol: str,
+        token_out_symbol: str
+    ) -> Dict[str, Any]:
+        """Execute the actual swap transaction on-chain"""
+      
+        router_address = self.dex_routers[chain][dex]
+        router_contract = web3.eth.contract(
+            address=router_address,
+            abi=self.uniswap_v2_abi
+        )
+      
+        try:
+            # Calculate deadline (10 minutes from now)
+            deadline = int(datetime.now().timestamp()) + 600
+          
+            # Calculate minimum output amount (with 1% slippage tolerance)
+            amounts_out = await self._get_amounts_out(
+                web3, router_contract, amount, token_in_address, token_out_address
+            )
+            min_amount_out = int(amounts_out[-1] * 0.99) # 1% slippage tolerance
+          
+            # Build transaction based on token types
+            if token_in_address == "0x0000000000000000000000000000000000000000":
+                # Swapping native token (ETH/MATIC/BNB) for token
+                amount_wei = web3.to_wei(amount, 'ether')
+              
+                swap_txn = router_contract.functions.swapExactETHForTokens(
+                    min_amount_out,
+                    [self._get_wrapped_native_address(chain), token_out_address],
+                    self.address,
+                    deadline
+                ).build_transaction({
+                    'from': self.address,
+                    'value': amount_wei,
+                    'gas': 250000,
+                    'gasPrice': int(web3.eth.gas_price * 1.2),
+                    'nonce': web3.eth.get_transaction_count(self.address)
+                })
+              
+            elif token_out_address == "0x0000000000000000000000000000000000000000":
+                # Swapping token for native token
+                token_contract = web3.eth.contract(
+                    address=token_in_address,
+                    abi=self.erc20_abi
+                )
+                decimals = token_contract.functions.decimals().call()
+                amount_wei = int(amount * (10 ** decimals))
+              
+                swap_txn = router_contract.functions.swapExactTokensForETH(
+                    amount_wei,
+                    min_amount_out,
+                    [token_in_address, self._get_wrapped_native_address(chain)],
+                    self.address,
+                    deadline
+                ).build_transaction({
+                    'from': self.address,
+                    'gas': 250000,
+                    'gasPrice': int(web3.eth.gas_price * 1.2),
+                    'nonce': web3.eth.get_transaction_count(self.address)
+                })
+              
+            else:
+                # Swapping token for token
+                token_contract = web3.eth.contract(
+                    address=token_in_address,
+                    abi=self.erc20_abi
+                )
+                decimals = token_contract.functions.decimals().call()
+                amount_wei = int(amount * (10 ** decimals))
+              
+                # Use WETH as intermediate if tokens don't have direct pair
+                path = [token_in_address, self._get_wrapped_native_address(chain), token_out_address]
+              
+                swap_txn = router_contract.functions.swapExactTokensForTokens(
+                    amount_wei,
+                    min_amount_out,
+                    path,
+                    self.address,
+                    deadline
+                ).build_transaction({
+                    'from': self.address,
+                    'gas': 300000,
+                    'gasPrice': int(web3.eth.gas_price * 1.2),
+                    'nonce': web3.eth.get_transaction_count(self.address)
+                })
+          
+            # Sign transaction
+            signed_txn = web3.eth.account.sign_transaction(swap_txn, self.account.key)
+          
+            # Send transaction
+            tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+          
+            console.print(f"📤 Transaction sent: {tx_hash.hex()}")
+          
+            # Wait for confirmation
+            receipt = web3.eth.wait_for_transaction_receipt(tx_hash, timeout=300)
+          
+            if receipt.status != 1:
+                raise Exception(f"Swap transaction failed: {tx_hash.hex()}")
+              
+            return {
+                "hash": tx_hash,
+                "receipt": receipt,
+                "status": "success"
+            }
+              
+        except Exception as e:
+            raise Exception(f"Swap execution failed: {e}")
+    async def _get_amounts_out(
+        self, web3: Web3, router_contract, amount: float, token_in: str, token_out: str
+    ) -> List[int]:
+        """Get expected output amounts for the swap"""
+        try:
+            chain_id = web3.eth.chain_id
+            wrapped_native = self._get_wrapped_native_address(chain_id)
+            if token_in == "0x0000000000000000000000000000000000000000":
+                # Native token input
+                amount_wei = web3.to_wei(amount, 'ether')
+                path = [wrapped_native, token_out]
+            elif token_out == "0x0000000000000000000000000000000000000000":
+                # Native token output
+                token_contract = web3.eth.contract(address=token_in, abi=self.erc20_abi)
+                decimals = token_contract.functions.decimals().call()
+                amount_wei = int(amount * (10 ** decimals))
+                path = [token_in, wrapped_native]
+            else:
+                # Token to token
+                token_contract = web3.eth.contract(address=token_in, abi=self.erc20_abi)
+                decimals = token_contract.functions.decimals().call()
+                amount_wei = int(amount * (10 ** decimals))
+                path = [token_in, wrapped_native, token_out]
+          
+            amounts = router_contract.functions.getAmountsOut(amount_wei, path).call()
+            return amounts
+          
+        except Exception as e:
+            logger.error(f"Failed to get amounts out: {e}")
+            # Return conservative estimate
+            return [int(amount * 0.95 * 10**18)]
+    def _get_wrapped_native_address(self, chain_id_or_name) -> str:
+        """Get wrapped native token address for chain"""
+        if isinstance(chain_id_or_name, str):
+            chain = chain_id_or_name
+        else:
+            chain_map = {1: "ethereum", 137: "polygon", 56: "bsc", 42161: "arbitrum"}
+            chain = chain_map.get(chain_id_or_name, "ethereum")
+      
+        wrappers = {
+            "ethereum": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", # WETH
+            "polygon": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270", # WMATIC
+            "bsc": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", # WBNB
+            "arbitrum": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1" # WETH
+        }
+        return wrappers.get(chain, wrappers["ethereum"])
+    async def _calculate_received_amount(
+        self, web3: Web3, token_address: str, receipt, symbol: str
+    ) -> float:
+        """Calculate actual amount received from transaction logs"""
+        try:
+            if token_address == "0x0000000000000000000000000000000000000000":
+                # For native token, parse ETH transfer from logs
+                for log in receipt.logs:
+                    # This is simplified - in practice you'd parse the specific transfer events
+                    pass
+                return 0.0 # Placeholder
+            else:
+                # For ERC20 tokens, parse Transfer events
+                token_contract = web3.eth.contract(
+                    address=token_address,
+                    abi=self.erc20_abi
+                )
+              
+                # Parse transfer logs to find amount received
+                for log in receipt.logs:
+                    if log.address.lower() == token_address.lower():
+                        try:
+                            # Decode transfer event
+                            decoded = token_contract.events.Transfer().process_log(log)
+                            if decoded['args']['to'].lower() == self.address.lower():
+                                decimals = token_contract.functions.decimals().call()
+                                return float(decoded['args']['value']) / (10 ** decimals)
+                        except:
+                            continue
+              
+                return 0.0 # Placeholder if parsing fails
+              
+        except Exception as e:
+            logger.error(f"Failed to calculate received amount: {e}")
+            return 0.0
+    def _calculate_slippage(self, amount_in: float, amount_out: float, token_in: str, token_out: str) -> float:
+        """Calculate actual slippage from trade"""
+        try:
+            # This is simplified - in practice you'd use real price data
+            expected_rate = 2500.0 if token_in == "ETH" and token_out == "USDC" else 1.0
+            expected_out = amount_in * expected_rate
+            if expected_out > 0:
+                return abs(expected_out - amount_out) / expected_out * 100
+            return 0.0
+        except:
+            return 0.0
+    def _get_explorer_url(self, chain: str, tx_hash: str) -> str:
+        """Get blockchain explorer URL for the transaction"""
+        explorers = {
+            "ethereum": f"https://etherscan.io/tx/{tx_hash}",
+            "polygon": f"https://polygonscan.com/tx/{tx_hash}",
+            "bsc": f"https://bscscan.com/tx/{tx_hash}",
+            "arbitrum": f"https://arbiscan.io/tx/{tx_hash}"
+        }
+        return explorers.get(chain, f"Transaction: {tx_hash}")
+    async def get_transaction_status(self, tx_hash: str, chain: str) -> Dict[str, Any]:
+        """Check the status of a transaction"""
+        if chain not in self.web3_connections:
+            return {"error": f"Chain {chain} not connected"}
+      
+        web3 = self.web3_connections[chain]
+        try:
+            receipt = web3.eth.get_transaction_receipt(tx_hash)
+            transaction = web3.eth.get_transaction(tx_hash)
+          
+            return {
+                "hash": tx_hash,
+                "status": "success" if receipt.status == 1 else "failed",
+                "block_number": receipt.blockNumber,
+                "gas_used": receipt.gasUsed,
+                "gas_price": transaction.gasPrice,
+                "gas_cost": float(web3.from_wei(receipt.gasUsed * transaction.gasPrice, 'ether')),
+                "confirmations": web3.eth.block_number - receipt.blockNumber,
+                "explorer_url": self._get_explorer_url(chain, tx_hash)
+            }
+        except Exception as e:
+            return {"error": f"Failed to get transaction status: {e}"}
 def make_llm_client_async() -> Optional[AsyncOpenAI]:
     if not OPENAI_AVAILABLE:
         return None
@@ -696,8 +1230,6 @@ def make_llm_client_async() -> Optional[AsyncOpenAI]:
     if openai_key:
         return AsyncOpenAI(api_key=openai_key)
     return None
-
-
 class DirectOpenAIAgent:
     """Fallback agent using direct OpenAI/OpenRouter API (OpenAI 1.x client)"""
     def __init__(self, name: str, description: str, system_prompt: str, max_steps: int = 10):
@@ -709,10 +1241,8 @@ class DirectOpenAIAgent:
         self.client = make_llm_client_async()
         if not self.client:
             logger.error("No LLM client available (no OpenAI/OpenRouter key)")
-
     def add_tool(self, tool: BaseTool):
         self.tools.append(tool)
-
     async def run(self, prompt: str) -> Dict[str, Any]:
         if not self.client:
             logger.warning("OpenAI/OpenRouter not available, returning mock response")
@@ -726,7 +1256,6 @@ class DirectOpenAIAgent:
                     "parameters": t.parameters
                 }
             } for t in self.tools]
-
             messages = [
                 {"role": "system", "content": self.system_prompt or "You are a helpful AI assistant."},
                 {"role": "user", "content": prompt or "Analyze the market."}
@@ -743,13 +1272,12 @@ class DirectOpenAIAgent:
         except Exception as e:
             logger.error(f"LLM API error: {e}")
             return {"content": "", "tool_calls": [], "final_answer": ""}
-
     async def _process_response(self, response: Any) -> Dict[str, Any]:
         msg = response.choices[0].message
         content = getattr(msg, "content", None) or ""
         tool_calls = getattr(msg, "tool_calls", None) or []
         results = []
-        
+      
         for tc in tool_calls:
             tool_name = tc.function.name
             try:
@@ -770,25 +1298,23 @@ class DirectOpenAIAgent:
             "tool_calls": results,
             "final_answer": content
         }
-
-
 # ----------------------------- JSON extraction helpers -----------------------------
 def _extract_json_from_text(text: str) -> Optional[Dict[str, Any]]:
     """Enhanced JSON extraction with better pattern matching"""
     if not text:
         return None
-    
+  
     # Remove any markdown formatting
-    text = re.sub(r'```json\s*|\s*```', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'```json\s*', '', text, flags=re.IGNORECASE)
     text = re.sub(r'```\s*|\s*```', '', text)
-    
+  
     # Try to find JSON block patterns
     json_patterns = [
-        r'\{[^{}]*"opportunities"[^{}]*\[[^\]]*\][^{}]*\}',  # Simple opportunities object
-        r'\{.*?"opportunities".*?\[.*?\].*?\}',  # More complex opportunities object
-        r'\{.*?\}',  # Any JSON object
+        r'[\{].*?opportunities.*?[\}]', # Simple opportunities object
+        r'\{.*?"opportunities".*?\[.*?\].*?\}', # More complex opportunities object
+        r'\{.*?\}', # Any JSON object
     ]
-    
+  
     for pattern in json_patterns:
         matches = re.findall(pattern, text, flags=re.DOTALL)
         for match in matches:
@@ -798,7 +1324,7 @@ def _extract_json_from_text(text: str) -> Optional[Dict[str, Any]]:
                     return parsed
             except json.JSONDecodeError:
                 continue
-    
+  
     # Try parsing the entire text as JSON
     try:
         parsed = json.loads(text.strip())
@@ -806,9 +1332,8 @@ def _extract_json_from_text(text: str) -> Optional[Dict[str, Any]]:
             return parsed
     except json.JSONDecodeError:
         pass
-    
+  
     return None
-
 def _validate_opportunities(obj: Dict[str, Any]) -> Optional[List[Dict[str, Any]]]:
     if not isinstance(obj, dict):
         return None
@@ -816,9 +1341,6 @@ def _validate_opportunities(obj: Dict[str, Any]) -> Optional[List[Dict[str, Any]
     if isinstance(opps, list) and all(isinstance(o, dict) for o in opps):
         return opps
     return None
-
-
-
 class TradingBotOrchestrator:
     """Main orchestrator for the DeFi AI Trading Bot with real agent integration"""
     def __init__(self, config_path: Optional[str] = None):
@@ -827,11 +1349,24 @@ class TradingBotOrchestrator:
         self.setup_logging()
         # Web3
         self.web3_connections = self.setup_web3() if WEB3_AVAILABLE else {}
+        # Real executor
+        private_key = os.getenv("PRIVATE_KEY")
+        if private_key and self.web3_connections:
+            self.real_executor = RealOnChainExecutor(self.web3_connections, private_key)
+            self.use_real_transactions = True
+            console.print("[bold green]🔑 Real transaction mode enabled[/bold green]")
+        else:
+            self.real_executor = None
+            self.use_real_transactions = False
+            console.print("[yellow]🎭 Simulation mode - no private key provided[/yellow]")
         # Flags
         self.using_spoon_agents: bool = False
         # LLM & agents
         self.chatbot = self.setup_chatbot()
         self.initialize_agents()
+        # DB/cache
+        self.redis_client = self.setup_redis() if REDIS_AVAILABLE else None
+        self.db_engine = self.setup_database() if SQLALCHEMY_AVAILABLE else None
         # DB/cache
         self.redis_client = self.setup_redis() if REDIS_AVAILABLE else None
         self.db_engine = self.setup_database() if SQLALCHEMY_AVAILABLE else None
@@ -852,20 +1387,17 @@ class TradingBotOrchestrator:
         self.session = self.setup_http_session()
         logger.info("🚀 DeFi AI Trading Bot initialized successfully")
         self.display_startup_banner()
-
     # ---------- SpoonOS ChatBot setup (OpenRouter-compatible even without base_url param)
     def _build_openrouter_chatbot(self) -> Optional[Any]:
         key = get_openrouter_key()
         if not key:
             logger.warning("OpenRouter requested but no key set")
             return None
-
-        
+      
         os.environ.setdefault("OPENAI_API_KEY", key)
         os.environ["OPENAI_BASE_URL"] = OPENROUTER_BASE
-
         kwargs = dict(
-            llm_provider="openai",  
+            llm_provider="openai",
             model_name=os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini"),
             api_key=key,
         )
@@ -875,7 +1407,6 @@ class TradingBotOrchestrator:
                 kwargs["base_url"] = OPENROUTER_BASE
         except Exception:
             pass
-
         try:
             bot = ChatBot(**kwargs)
             bot = _patch_chatbot_methods(bot)
@@ -906,7 +1437,6 @@ class TradingBotOrchestrator:
         except Exception as e:
             logger.error(f"ChatBot init failed: {e}")
             return None
-
     def setup_chatbot(self):
         if not SPOONOS_AVAILABLE or ChatBot is None:
             logger.info("SpoonOS not available, will use direct API calls")
@@ -914,7 +1444,6 @@ class TradingBotOrchestrator:
         try:
             provider = self.config["llm_settings"].get("default_provider", "openai")
             model = self.config["llm_settings"].get("model", "gpt-4o-mini")
-
             if provider == "openai":
                 if is_openrouter_enabled():
                     return self._build_openrouter_chatbot()
@@ -930,7 +1459,6 @@ class TradingBotOrchestrator:
                     pass
                 logger.info(f"✅ Spoon ChatBot ready (OpenAI:{model})")
                 return bot
-
             elif provider == "anthropic":
                 # Native Anthropic; if using OpenRouter, prefer openrouter path above
                 api_key = (os.getenv("ANTHROPIC_API_KEY") or "").strip()
@@ -945,16 +1473,13 @@ class TradingBotOrchestrator:
                     pass
                 logger.info(f"✅ Spoon ChatBot ready (Anthropic:{model})")
                 return bot
-
             else:
                 logger.warning(f"Unsupported provider '{provider}' in config")
                 return None
-
         except Exception as e:
             logger.error(f"Failed to setup Spoon ChatBot: {e}")
             return None
     # ---------- end ChatBot setup
-
     def display_startup_banner(self):
         if self.using_spoon_agents:
             status = "🟢 SpoonOS (OpenRouter)" if is_openrouter_enabled() else "🟢 SpoonOS (OpenAI)"
@@ -966,14 +1491,13 @@ class TradingBotOrchestrator:
         banner = Panel.fit(
             f"""[bold cyan]🤖 DeFi AI Trading Bot v1.3.2[/bold cyan]
 [green]Status: {status} • Web3: {web3_status}[/green]
-            
+          
 [yellow]Multi-Chain • AI-Powered • Risk-Managed[/yellow]
-            
+          
 [dim]Ready for autonomous DeFi trading across chains[/dim]""",
             border_style="bright_blue"
         )
         console.print(banner)
-
     def load_config(self) -> Dict:
         config_path = Path(self.config_path)
         if config_path.exists():
@@ -991,9 +1515,7 @@ class TradingBotOrchestrator:
             default_config = self.get_default_config()
             with open(config_path, 'w') as f:
                 json.dump(default_config, f, indent=2)
-            logger.info(f"Default config saved to {config_path}")
             return default_config
-
     def get_default_config(self) -> Dict:
         return {
             "default_agent": "market_intelligence",
@@ -1065,7 +1587,6 @@ class TradingBotOrchestrator:
                 "metrics_retention_days": 365
             }
         }
-
     def setup_logging(self):
         logger.remove()
         log_level = os.getenv("LOG_LEVEL", "INFO").upper()
@@ -1087,20 +1608,18 @@ class TradingBotOrchestrator:
             level="DEBUG"
         )
         logger.info("Logging system configured")
-
     def setup_http_session(self) -> requests.Session:
         session = requests.Session()
         retry_strategy = Retry(total=3, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter); session.mount("https://", adapter)
-        session.timeout = 30  # custom attribute; harmless if unused
+        session.timeout = 30 # custom attribute; harmless if unused
         session.headers.update({
             'User-Agent': 'DeFi-AI-Trading-Bot/1.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         })
         return session
-
     def setup_web3(self) -> Dict[str, Any]:
         if not WEB3_AVAILABLE:
             logger.warning("Web3 not available - running in simulation mode")
@@ -1132,7 +1651,6 @@ class TradingBotOrchestrator:
         if not connections:
             logger.warning("No blockchain connections available - running in simulation mode")
         return connections
-
     def setup_redis(self):
         try:
             redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -1143,7 +1661,6 @@ class TradingBotOrchestrator:
         except Exception as e:
             logger.warning(f"Redis connection failed: {e}")
             return None
-
     def setup_database(self):
         try:
             database_url = os.getenv("DATABASE_URL")
@@ -1159,8 +1676,7 @@ class TradingBotOrchestrator:
         except Exception as e:
             logger.warning(f"Database connection failed: {e}")
             return None
-
-    
+  
     def _make_spoon_agent(self, cls, **kwargs):
         tools_manager = kwargs.pop("tools_manager", None)
         attempts = []
@@ -1172,7 +1688,6 @@ class TradingBotOrchestrator:
             ]
         else:
             attempts = [dict()]
-
         last_err = None
         for tool_kwargs in attempts:
             try:
@@ -1184,17 +1699,14 @@ class TradingBotOrchestrator:
         if last_err:
             raise last_err
         return cls(**kwargs)
-
     def _tool_names(self) -> List[str]:
         return ["chainbase_analytics", "price_aggregator", "dex_monitor"]
-
     def _tools_clause(self) -> str:
         names = ", ".join(self._tool_names())
         return (
             f"\nTOOLS: You may call functions only in {{{names}}}. "
             f"Do NOT invent other tool names."
         )
-
     def initialize_agents(self):
         self.tools = self.setup_tools()
         if SPOONOS_AVAILABLE and self.chatbot:
@@ -1205,7 +1717,6 @@ class TradingBotOrchestrator:
             self._initialize_spoonos_agents()
         else:
             self._initialize_fallback_agents()
-
     def setup_tools(self):
         tools = {
             "chainbase_analytics": ChainbaseAnalyticsTool(),
@@ -1214,12 +1725,10 @@ class TradingBotOrchestrator:
         }
         logger.info(f"✅ Initialized {len(tools)} trading tools")
         return tools
-
     def _initialize_spoonos_agents(self):
         try:
             if not self.chatbot:
                 raise RuntimeError("ChatBot not initialized")
-
             market_tools = ToolManager([
                 self.tools["chainbase_analytics"],
                 self.tools["price_aggregator"],
@@ -1242,7 +1751,6 @@ class TradingBotOrchestrator:
                 llm=self.chatbot,
                 tools_manager=market_tools
             )
-
             risk_tools = ToolManager([
                 self.tools["price_aggregator"],
                 self.tools["chainbase_analytics"]
@@ -1259,7 +1767,6 @@ class TradingBotOrchestrator:
                 llm=self.chatbot,
                 tools_manager=risk_tools
             )
-
             execution_tools = ToolManager([
                 self.tools["dex_monitor"],
                 self.tools["price_aggregator"]
@@ -1276,13 +1783,11 @@ class TradingBotOrchestrator:
                 llm=self.chatbot,
                 tools_manager=execution_tools
             )
-
             self.using_spoon_agents = True
             logger.info("✅ SpoonOS agents initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize SpoonOS agents: {e}")
             self._initialize_fallback_agents()
-
     def _initialize_fallback_agents(self):
         try:
             self.market_agent = DirectOpenAIAgent(
@@ -1300,7 +1805,6 @@ class TradingBotOrchestrator:
             self.market_agent.add_tool(self.tools["chainbase_analytics"])
             self.market_agent.add_tool(self.tools["price_aggregator"])
             self.market_agent.add_tool(self.tools["dex_monitor"])
-
             self.risk_agent = DirectOpenAIAgent(
                 name="risk_assessment_agent",
                 description="Evaluates risks and optimizes portfolio allocation",
@@ -1311,7 +1815,6 @@ class TradingBotOrchestrator:
             )
             self.risk_agent.add_tool(self.tools["price_aggregator"])
             self.risk_agent.add_tool(self.tools["chainbase_analytics"])
-
             self.execution_agent = DirectOpenAIAgent(
                 name="execution_manager_agent",
                 description="Handles optimal trade execution and position management",
@@ -1330,7 +1833,6 @@ class TradingBotOrchestrator:
             self.risk_agent = None
             self.execution_agent = None
             self.using_spoon_agents = False
-
     def _recover_agents(self):
         logger.warning("Recovering agents after failure...")
         try:
@@ -1341,12 +1843,10 @@ class TradingBotOrchestrator:
             logger.info("Agents recovered.")
         except Exception as e:
             logger.error(f"Agent recovery failed: {e}")
-
     # ---------- Market Scan ----------
     def _scan_json_schema(self) -> str:
         return """
 Return ONLY this JSON (no markdown, no explanations):
-
 {
   "opportunities": [
     {
@@ -1364,7 +1864,6 @@ Return ONLY this JSON (no markdown, no explanations):
   ]
 }
         """.strip()
-
     async def scan_markets(self, chains: Optional[List[str]] = None, tokens: Optional[List[str]] = None) -> Dict:
         console.print("\n[bold blue]🔍 Scanning Markets for Opportunities[/bold blue]")
         enabled_chains = [chain for chain, cfg in self.config["trading_config"]["chains"].items() if cfg.get("enabled", False)]
@@ -1372,17 +1871,15 @@ Return ONLY this JSON (no markdown, no explanations):
         if not chains:
             chains = ["ethereum", "polygon"]
         tokens = list(tokens) if tokens else ["ETH", "BTC", "USDC", "MATIC", "USDT"]
-
         with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}"), BarColumn(), console=console,) as progress:
             task = progress.add_task(f"Analyzing {len(chains)} chains...", total=len(chains))
             all_opportunities: List[Dict[str, Any]] = []
-
             for chain in chains:
                 progress.update(task, description=f"Scanning {chain}...")
-                
+              
                 chain_ops: List[Dict[str, Any]] = []
-                
-                
+              
+              
                 try:
                     if self.market_agent:
                         if hasattr(self.market_agent, "clear"):
@@ -1392,15 +1889,12 @@ Return ONLY this JSON (no markdown, no explanations):
                                 pass
                         prompt = f"""
 Scan the {chain} blockchain for profitable DeFi opportunities focusing on tokens: {', '.join(tokens)}.
-
 Use your tools to gather real market data, then identify opportunities like:
 - Arbitrage between DEXs
 - Price discrepancies
-- Yield farming opportunities  
+- Yield farming opportunities
 - Liquidity mining rewards
-
 Return a JSON response with opportunities array containing detailed analysis.
-
 {self._scan_json_schema()}
 """.strip()
                         try:
@@ -1414,11 +1908,10 @@ Return a JSON response with opportunities array containing detailed analysis.
                             logger.info(f"AI agent found {len(chain_ops)} opportunities on {chain}")
                         except Exception as agent_err:
                             logger.error(f"Agent scan failed on {chain}: {agent_err}")
-                            
+                          
                 except Exception as e:
                     logger.error(f"Unexpected error setting up agent scan for {chain}: {e}")
-
-               
+             
                 try:
                     dm = await self.tools["dex_monitor"].execute(chain=chain, token_pair=["ETH", "USDC"], min_profit_bps=30)
                     for opp in dm.get("opportunities", []):
@@ -1438,8 +1931,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                     logger.info(f"DEX monitor found {len(dm.get('opportunities', []))} opportunities on {chain}")
                 except Exception as _e:
                     logger.warning(f"Direct DEX monitor fallback failed for {chain}: {_e}")
-
-                
+              
                 if DEMO_MODE and not chain_ops:
                     chain_ops.append({
                         "id": f"{chain}_fallback_0",
@@ -1453,17 +1945,14 @@ Return a JSON response with opportunities array containing detailed analysis.
                         "estimated_gas": float(np.random.uniform(20, 60)),
                         "source": "ai_synthetic"
                     })
-
                 all_opportunities.extend(chain_ops)
                 progress.advance(task)
                 await asyncio.sleep(0.15)
-
             if self.redis_client:
                 try:
                     self.redis_client.setex("market_scan_results", 3600, json.dumps(all_opportunities, default=str))
                 except Exception as e:
                     logger.warning(f"Failed to cache results: {e}")
-
             self.display_opportunities(all_opportunities)
             return {
                 "opportunities": all_opportunities,
@@ -1471,14 +1960,12 @@ Return a JSON response with opportunities array containing detailed analysis.
                 "chains_scanned": len(chains),
                 "total_opportunities": len(all_opportunities)
             }
-
     def _parse_agent_opportunities(self, agent_result: Any, chain: str) -> List[Dict]:
         """Enhanced parsing to better extract AI-generated opportunities from agent responses."""
         opportunities: List[Dict[str, Any]] = []
         if agent_result is None:
             return opportunities
-
-        
+      
         if isinstance(agent_result, dict) and "tool_calls" in agent_result:
             for tool_call in agent_result["tool_calls"]:
                 if tool_call.get("tool") == "dex_monitor":
@@ -1502,8 +1989,7 @@ Return a JSON response with opportunities array containing detailed analysis.
                             })
                     except Exception as e:
                         logger.warning(f"Failed to parse DEX monitor tool result: {e}")
-
-        
+      
         text_content = None
         if isinstance(agent_result, dict):
             text_content = agent_result.get("content") or agent_result.get("final_answer")
@@ -1511,11 +1997,10 @@ Return a JSON response with opportunities array containing detailed analysis.
             text_content = getattr(agent_result, "content")
         elif isinstance(agent_result, str):
             text_content = agent_result
-
         if text_content:
             logger.debug(f"Parsing AI content for {chain}: {text_content[:200]}...")
-            
-            
+          
+          
             extracted_json = _extract_json_from_text(text_content)
             if extracted_json:
                 opps = _validate_opportunities(extracted_json)
@@ -1541,15 +2026,15 @@ Return a JSON response with opportunities array containing detailed analysis.
                 else:
                     logger.debug(f"JSON found but no valid opportunities array for {chain}")
             else:
-                
+              
                 logger.debug(f"No JSON found, attempting text parsing for {chain}")
-                
-                
+              
+              
                 if any(keyword in text_content.lower() for keyword in ["arbitrage", "opportunity", "profit", "yield"]):
-                    
-                    profit_match = re.search(r'[\$]?(\d+\.?\d*)', text_content)
-                    profit = float(profit_match.group(1)) if profit_match else np.random.uniform(100, 500)
-                    
+                  
+                    profit_match = re.search(r'[\$£€]?([\d.,]+)', text_content)
+                    profit = float(profit_match.group(1).replace(',', '')) if profit_match else np.random.uniform(100, 500)
+                  
                     opportunities.append({
                         "id": f"{chain}_ai_parsed_{len(opportunities)}",
                         "chain": chain,
@@ -1563,10 +2048,8 @@ Return a JSON response with opportunities array containing detailed analysis.
                         "source": "ai_agent",
                         "notes": text_content[:100] + "..." if len(text_content) > 100 else text_content
                     })
-
         logger.info(f"Total opportunities parsed for {chain}: {len(opportunities)}")
         return opportunities
-
     # ---------- Risk / Execution ----------
     async def assess_risk(self, strategy: str, amount: float, tokens: List[str] = None) -> Dict:
         console.print(f"\n[bold yellow]⚠️ Assessing Risk for {strategy}[/bold yellow]")
@@ -1580,18 +2063,15 @@ Return a JSON response with opportunities array containing detailed analysis.
                         pass
                 prompt = f"""
 Perform comprehensive risk analysis for the following trading strategy:
-
 Strategy: {strategy}
 Investment Amount: ${amount:,.2f}
 Target Tokens: {', '.join(tokens)}
-
 Analyze:
 1. Market Risk (volatility, correlations)
 2. Liquidity Risk (DEX liquidity, slippage potential)
 3. Smart Contract Risk (protocol security)
 4. Operational Risk (gas, MEV)
 5. Portfolio Impact (position sizing)
-
 Return concise bullet recommendations.
 """
                 result = await self.risk_agent.run(prompt)
@@ -1617,7 +2097,6 @@ Return concise bullet recommendations.
         except Exception as e:
             logger.error(f"Error in risk assessment: {e}")
             return {"error": str(e), "strategy": strategy, "amount": amount}
-
     def _parse_risk_assessment(self, agent_result: Dict, strategy: str, amount: float) -> Dict:
         try:
             risk_data = {
@@ -1653,7 +2132,6 @@ Return concise bullet recommendations.
         except Exception as e:
             logger.error(f"Error parsing risk assessment: {e}")
             return {"strategy": strategy, "amount": amount, "risk_score": 5.0, "error": str(e)}
-
     async def execute_optimal_trade(self, token_in: str, token_out: str, amount: float, chain: str = "ethereum") -> Dict:
         console.print(f"\n[bold green]🚀 Executing Trade: {amount} {token_in} → {token_out} on {chain}[/bold green]")
         try:
@@ -1668,13 +2146,11 @@ Execute optimal trade:
 - From: {amount} {token_in}
 - To: {token_out}
 - Chain: {chain}
-
 Consider:
 1) Minimal slippage across DEXs
 2) Lowest gas costs & timing
 3) MEV protection
 4) Best price execution
-
 Return a short, clear plan (no markdown).
 """
                 result = await self.execution_agent.run(prompt)
@@ -1697,12 +2173,11 @@ Return a short, clear plan (no markdown).
                     "source": "fallback"
                 }
             self.display_execution_plan(execution_plan)
-            trade_result = await self._simulate_trade_execution(execution_plan)
+            trade_result = await self._execute_trade(execution_plan)
             return trade_result
         except Exception as e:
             logger.error(f"Error in trade execution: {e}")
             return {"error": str(e), "token_in": token_in, "token_out": token_out}
-
     def _parse_execution_plan(self, agent_result: Dict, token_in: str, token_out: str, amount: float, chain: str) -> Dict:
         try:
             plan = {
@@ -1710,7 +2185,7 @@ Return a short, clear plan (no markdown).
                 "token_out": token_out,
                 "amount_in": amount,
                 "chain": chain,
-                "recommended_dex": "Uniswap V3",
+                "recommended_dex": "uniswap_v2",
                 "expected_output": amount * 0.95,
                 "estimated_gas": 100.0,
                 "slippage_tolerance": 0.01,
@@ -1730,18 +2205,17 @@ Return a short, clear plan (no markdown).
                             opportunities = result.get("opportunities", [])
                             if opportunities:
                                 best_opp = min(opportunities, key=lambda x: x.get("gas_cost_usd", 999))
-                                plan["recommended_dex"] = best_opp.get("dex_buy", "Uniswap V3")
+                                plan["recommended_dex"] = best_opp.get("dex_buy", "uniswap_v2").lower()
                                 plan["estimated_gas"] = float(best_opp.get("gas_cost_usd", 100))
                 final_answer = (agent_result.get("final_answer", "") or agent_result.get("content", "") or "")
                 for dex in ["uniswap", "sushiswap", "curve", "1inch", "paraswap"]:
                     if dex in final_answer.lower():
-                        plan["recommended_dex"] = dex.title()
+                        plan["recommended_dex"] = dex
                         break
             return plan
         except Exception as e:
             logger.error(f"Error parsing execution plan: {e}")
             return {"token_in": token_in, "token_out": token_out, "amount_in": amount, "error": str(e)}
-
     # ---------- Displays ----------
     def display_execution_plan(self, plan: Dict):
         console.print("\n[bold]📋 Trade Execution Plan[/bold]")
@@ -1755,35 +2229,59 @@ Return a short, clear plan (no markdown).
         table.add_row("Slippage Tolerance", f"{plan.get('slippage_tolerance', 0.01)*100:.2f}%")
         table.add_row("Price Impact", f"{plan.get('price_impact', 0.001)*100:.3f}%")
         console.print(table)
-
-    async def _simulate_trade_execution(self, plan: Dict) -> Dict:
-        await asyncio.sleep(2)
-        expected_output = float(plan.get("expected_output", 0))
-        actual_slippage = float(np.random.uniform(0, plan.get("slippage_tolerance", 0.01)))
-        actual_output = expected_output * (1 - actual_slippage)
-        trade_result = {
-            "status": "executed",
-            "transaction_hash": f"0x{hash(str(plan))%1000000000:09x}...",
-            "amount_in": plan["amount_in"],
-            "amount_out": actual_output,
-            "actual_slippage": actual_slippage,
-            "gas_used": float(plan.get("estimated_gas", 100)) * float(np.random.uniform(0.8, 1.2)),
-            "execution_time": float(np.random.uniform(10, 30)),
-            "dex_used": plan.get("recommended_dex", "Uniswap V3"),
-            "timestamp": datetime.now().isoformat()
-        }
-        profit = actual_output - float(plan["amount_in"])  # simplified P&L for demo
-        self.performance_metrics["total_trades"] += 1
-        if profit > 0:
-            self.performance_metrics["successful_trades"] += 1
-        self.performance_metrics["total_pnl"] += profit
-        self.trading_history.append(trade_result)
-        console.print(f"\n[bold green]✅ Trade Executed Successfully![/bold green]")
-        console.print(f"Transaction Hash: {trade_result['transaction_hash']}")
-        console.print(f"Output: {actual_output:.4f} {plan['token_out']}")
-        console.print(f"Slippage: {actual_slippage*100:.3f}%")
-        return trade_result
-
+    async def _execute_trade(self, plan: Dict) -> Dict:
+        if self.use_real_transactions and self.real_executor:
+            dex = plan.get("recommended_dex", "uniswap_v2")
+            try:
+                result = await self.real_executor.execute_real_trade(
+                    token_in=plan["token_in"],
+                    token_out=plan["token_out"],
+                    amount=plan["amount_in"],
+                    chain=plan["chain"],
+                    dex=dex
+                )
+                if result["status"] == "executed":
+                    self.performance_metrics["total_trades"] += 1
+                    pnl = result.get("amount_out", 0) - plan["amount_in"]  # simplified
+                    if pnl > 0:
+                        self.performance_metrics["successful_trades"] += 1
+                    self.performance_metrics["total_pnl"] += pnl
+                    self.trading_history.append(result)
+                    console.print(f"\n[bold green]🎉 REAL Trade Executed![/bold green]")
+                    console.print(f"Hash: {result['transaction_hash']}")
+                    console.print(f"Output: {result['amount_out']:.4f} {plan['token_out']}")
+                return result
+            except Exception as e:
+                console.print(f"[red]Real trade failed: {e}[/red]")
+                return {"status": "failed", "error": str(e)}
+        else:
+            # Fallback simulation
+            await asyncio.sleep(2)
+            expected_output = float(plan.get("expected_output", 0))
+            actual_slippage = float(np.random.uniform(0, plan.get("slippage_tolerance", 0.01)))
+            actual_output = expected_output * (1 - actual_slippage)
+            trade_result = {
+                "status": "executed",
+                "transaction_hash": f"0x{hash(str(plan))%1000000000:09x}...",
+                "amount_in": plan["amount_in"],
+                "amount_out": actual_output,
+                "actual_slippage": actual_slippage,
+                "gas_used": float(plan.get("estimated_gas", 100)) * float(np.random.uniform(0.8, 1.2)),
+                "execution_time": float(np.random.uniform(10, 30)),
+                "dex_used": plan.get("recommended_dex", "Uniswap V3"),
+                "timestamp": datetime.now().isoformat()
+            }
+            profit = actual_output - float(plan["amount_in"]) # simplified P&L for demo
+            self.performance_metrics["total_trades"] += 1
+            if profit > 0:
+                self.performance_metrics["successful_trades"] += 1
+            self.performance_metrics["total_pnl"] += profit
+            self.trading_history.append(trade_result)
+            console.print(f"\n[bold green]✅ Trade Executed Successfully! (Simulation)[/bold green]")
+            console.print(f"Transaction Hash: {trade_result['transaction_hash']}")
+            console.print(f"Output: {actual_output:.4f} {plan['token_out']}")
+            console.print(f"Slippage: {actual_slippage*100:.3f}%")
+            return trade_result
     def display_risk_assessment(self, risk: Dict[str, Any]):
         table = Table(title="🛡️ Risk Assessment")
         table.add_column("Metric", style="cyan")
@@ -1796,7 +2294,6 @@ Return a short, clear plan (no markdown).
         recs = risk.get("recommendations", [])
         table.add_row("Recommendations", recs[0] if recs else "N/A")
         console.print(table)
-
     def display_opportunities(self, opportunities: List[Dict]):
         if not opportunities:
             console.print("[yellow]No opportunities found[/yellow]")
@@ -1831,18 +2328,16 @@ Return a short, clear plan (no markdown).
                 source
             )
         console.print(table)
-        
-        
+      
+      
         ai_ops = [opp for opp in opportunities if opp.get("source") == "ai_agent"]
         dex_ops = [opp for opp in opportunities if opp.get("source") in ["dex_monitor", "dex_monitor_ai"]]
-        
+      
         if ai_ops:
             console.print(f"\n[bold blue]🧠 AI-Generated: {len(ai_ops)} opportunities[/bold blue]")
         if dex_ops:
             console.print(f"[bold green]🛠️ DEX Monitor: {len(dex_ops)} opportunities[/bold green]")
-
         console.print("\n✅ Demo market scan completed successfully!")
-
     async def display_dashboard(self, live_mode: bool = False):
         if live_mode:
             with Live(self.generate_dashboard_layout(), refresh_per_second=0.5, console=console) as live:
@@ -1857,18 +2352,16 @@ Return a short, clear plan (no markdown).
             console.clear()
             await self.update_dashboard_data()
             console.print(self.generate_dashboard_layout())
-
     def generate_dashboard_layout(self) -> Layout:
         if self.using_spoon_agents:
-            agent_status = "SpoonOS (OpenRouter)" if is_openrouter_enabled() else "SpoonOS (OpenAI)"
+            agent_status = "SPOONOS ACTIVE"
             agent_status_display = "🟢 " + agent_status
         elif OPENAI_AVAILABLE and (is_openrouter_enabled() or bool(os.getenv("OPENAI_API_KEY"))):
             agent_status = "Direct (OpenRouter)" if is_openrouter_enabled() else "Direct (OpenAI)"
             agent_status_display = "🟡 " + agent_status
         else:
-            agent_status = "Fallback"
+            agent_status = "no_ai"
             agent_status_display = "🔴 No AI"
-
         title = Panel.fit(f"[bold blue]🤖 DeFi AI Trading Bot Dashboard[/bold blue] ({agent_status}) - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", border_style="bright_blue")
         layout = Layout()
         layout.split_column(Layout(title, name="title", size=3), Layout(name="main"))
@@ -1916,12 +2409,10 @@ Return a short, clear plan (no markdown).
 ● [cyan]ℹ[/cyan] Market scanning continuous"""
         layout["activity"].update(Panel(activity_content, title="Activity", border_style="cyan"))
         return layout
-
     async def update_dashboard_data(self):
         self.last_health_check = datetime.now()
         if self.active_positions:
             await self.update_positions()
-
     async def update_positions(self):
         for pos_id, position in list(self.active_positions.items()):
             try:
@@ -1936,17 +2427,14 @@ Return a short, clear plan (no markdown).
                     await self.trigger_take_profit(pos_id, position)
             except Exception as e:
                 logger.error(f"Error updating position {pos_id}: {e}")
-
     async def trigger_stop_loss(self, pos_id: str, position: Dict):
         logger.warning(f"Stop-loss triggered for position {pos_id}")
         console.print(f"[red]🛑 Stop-loss triggered for {position['token']} position[/red]")
         await self.close_position(pos_id, reason="stop_loss")
-
     async def trigger_take_profit(self, pos_id: str, position: Dict):
         logger.info(f"Take-profit triggered for position {pos_id}")
         console.print(f"[green]🎯 Take-profit triggered for {position['token']} position[/green]")
         await self.close_position(pos_id, reason="take_profit")
-
     async def close_position(self, pos_id: str, reason: str = "manual"):
         if pos_id not in self.active_positions:
             logger.error(f"Position {pos_id} not found")
@@ -1960,7 +2448,6 @@ Return a short, clear plan (no markdown).
         self.performance_metrics["total_pnl"] += float(position.get("pnl", 0))
         del self.active_positions[pos_id]
         logger.info(f"Position {pos_id} closed with P&L: ${float(position.get('pnl', 0)):.2f}")
-
     def get_system_health(self) -> Dict:
         if self.using_spoon_agents:
             framework = "spoonos"
@@ -1993,7 +2480,6 @@ Return a short, clear plan (no markdown).
                 "openrouter": is_openrouter_enabled()
             }
         }
-
     async def emergency_stop(self):
         console.print("\n[bold red]🛑 EMERGENCY STOP ACTIVATED[/bold red]")
         for strategy_name in list(self.running_strategies.keys()):
@@ -2005,7 +2491,6 @@ Return a short, clear plan (no markdown).
             console.print(f"[red]● Closed position: {pos_id}[/red]")
         console.print("[bold red]All trading activities stopped[/bold red]")
         logger.critical("Emergency stop executed - all activities halted")
-
     def save_state(self):
         state = {
             "timestamp": datetime.now().isoformat(),
@@ -2020,7 +2505,6 @@ Return a short, clear plan (no markdown).
         with open(state_file, 'w') as f:
             json.dump(state, f, indent=2, default=str)
         logger.info("Bot state saved")
-
     def load_state(self):
         state_file = Path("data/bot_state.json")
         if state_file.exists():
@@ -2037,7 +2521,6 @@ Return a short, clear plan (no markdown).
                 logger.error(f"Failed to load state: {e}")
                 return False
         return False
-
     async def graceful_shutdown(self):
         console.print("\n[yellow]🔄 Initiating graceful shutdown...[/yellow]")
         self.save_state()
@@ -2052,8 +2535,6 @@ Return a short, clear plan (no markdown).
                 pass
         console.print("[green]✅ Shutdown complete[/green]")
         logger.info("Bot shutdown completed")
-
-
 def setup_signal_handlers(bot: TradingBotOrchestrator):
     def signal_handler(signum, frame):
         logger.info(f"Received signal {signum}")
@@ -2069,8 +2550,6 @@ def setup_signal_handlers(bot: TradingBotOrchestrator):
         sys.exit(0)
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
-
-
 # CLI Command Group
 @click.group()
 @click.option('--config', '-c', help='Path to configuration file')
@@ -2083,8 +2562,6 @@ def cli(ctx, config, debug):
     ctx.obj['debug'] = debug
     if debug:
         os.environ['DEBUG'] = 'true'
-
-
 @cli.command()
 @click.option('--chains', '-c', multiple=True, help='Chains to scan (can specify multiple)')
 @click.option('--tokens', '-t', multiple=True, help='Tokens to focus on (can specify multiple)')
@@ -2110,13 +2587,11 @@ def scan(ctx, chains, tokens, min_profit):
                 console.print(f"[blue]🛠️ Tool-Generated: {len(tool_ops)} opportunities[/blue]")
         else:
             console.print(f"[yellow]No opportunities found above ${min_profit} profit threshold[/yellow]")
-    
+  
     try:
         asyncio.run(run_scan())
     except KeyboardInterrupt:
         console.print("\n[yellow]Scan cancelled by user[/yellow]")
-
-
 @cli.command()
 @click.argument('strategy', type=click.Choice(['arbitrage', 'yield_farming', 'dca', 'market_making']))
 @click.argument('amount', type=float)
@@ -2141,13 +2616,11 @@ def risk(ctx, strategy, amount, tokens):
                 console.print("[red]🛑 High risk - consider reducing position size[/red]")
         else:
             console.print(f"[red]Risk assessment failed: {result['error']}[/red]")
-    
+  
     try:
         asyncio.run(run_risk_assessment())
     except KeyboardInterrupt:
         console.print("\n[yellow]Risk assessment cancelled by user[/yellow]")
-
-
 @cli.command()
 @click.argument('token_in')
 @click.argument('token_out')
@@ -2166,13 +2639,11 @@ def trade(ctx, token_in, token_out, amount, chain):
             console.print(f"Output: {result.get('amount_out', 0):.4f} {token_out}")
         else:
             console.print(f"[red]Trade execution failed: {result['error']}[/red]")
-    
+  
     try:
         asyncio.run(run_trade())
     except KeyboardInterrupt:
         console.print("\n[yellow]Trade cancelled by user[/yellow]")
-
-
 @cli.command()
 @click.option('--live', '-l', is_flag=True, help='Live dashboard mode')
 @click.pass_context
@@ -2214,13 +2685,11 @@ def dashboard(ctx, live):
                 "win_rate": 80.0
             })
         await bot.display_dashboard(live_mode=live)
-    
+  
     try:
         asyncio.run(run_dashboard())
     except KeyboardInterrupt:
         console.print("\n[yellow]Dashboard closed[/yellow]")
-
-
 @cli.command()
 @click.pass_context
 def status(ctx):
@@ -2284,13 +2753,11 @@ def status(ctx):
             console.print("[yellow]● Install spoon-ai-sdk for enhanced agent capabilities (optional)[/yellow]")
         mode = os.getenv("SPOON_TOOLCALL_MODE", "").lower() or ("strip" if is_openrouter_enabled() else "sanitize")
         console.print(f"\n[dim]Tool-call mode: {mode} (set SPOON_TOOLCALL_MODE to 'strip' or 'sanitize')[/dim]")
-    
+  
     try:
         asyncio.run(run_status())
     except Exception as e:
         console.print(f"[red]Status check failed: {e}[/red]")
-
-
 @cli.command()
 @click.confirmation_option(prompt='Are you sure you want to stop all trading activities?')
 @click.pass_context
@@ -2299,13 +2766,11 @@ def emergency_stop(ctx):
     async def run_emergency_stop():
         bot = TradingBotOrchestrator(ctx.obj['config'])
         await bot.emergency_stop()
-    
+  
     try:
         asyncio.run(run_emergency_stop())
     except Exception as e:
         console.print(f"[red]Emergency stop failed: {e}[/red]")
-
-
 @cli.command()
 @click.pass_context
 def configure(ctx):
@@ -2337,7 +2802,6 @@ def configure(ctx):
         console.print("[green]✅ SpoonOS will use OpenRouter (OpenAI-compatible base_url)[/green]")
     elif SPOONOS_AVAILABLE and openai_key and not openai_key.startswith("sk-or-"):
         console.print("[green]✅ SpoonOS will use OpenAI directly[/green]")
-
     console.print("\n[bold]Risk Management:[/bold]")
     max_risk = Prompt.ask("Max portfolio risk per trade", default="0.02")
     stop_loss = Prompt.ask("Default stop loss percentage", default="0.05")
@@ -2358,18 +2822,16 @@ def configure(ctx):
     console.print("\n[bold]Next steps:[/bold]")
     console.print("1. Install missing dependencies:")
     if not SPOONOS_AVAILABLE:
-        console.print("   pip install spoon-ai-sdk  # optional SpoonOS SDK")
+        console.print(" pip install spoon-ai-sdk # optional SpoonOS SDK")
     if not WEB3_AVAILABLE:
-        console.print("   pip install web3 eth-account")
+        console.print(" pip install web3 eth-account")
     if not REDIS_AVAILABLE:
-        console.print("   pip install redis")
+        console.print(" pip install redis")
     if not SQLALCHEMY_AVAILABLE:
-        console.print("   pip install sqlalchemy")
+        console.print(" pip install sqlalchemy")
     console.print("2. Set up environment variables (API keys, RPC URLs)")
     console.print("3. Run: python defi_bot_fixed.py status")
     console.print("4. Start with: python defi_bot_fixed.py scan")
-
-
 @cli.command()
 def version():
     """Show version information"""
@@ -2390,8 +2852,6 @@ def version():
     console.print(f"Redis: {'✅' if REDIS_AVAILABLE else '❌'}")
     console.print(f"SQLAlchemy: {'✅' if SQLALCHEMY_AVAILABLE else '❌'}")
     console.print("\nFor help: python defi_bot_fixed.py --help")
-
-
 def main():
     try:
         cli()
@@ -2402,7 +2862,5 @@ def main():
         logger.error(f"Unexpected error: {e}")
         console.print(f"[red]Error: {e}[/red]")
         sys.exit(1)
-
-
 if __name__ == "__main__":
     main()

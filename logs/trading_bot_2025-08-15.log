@@ -1,0 +1,348 @@
+2025-08-15 11:31:52.915 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:31:54.145 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:31:55.483 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:31:56.474 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:31:57.363 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:35:16.604 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:35:17.500 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:35:18.706 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:35:19.818 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:35:20.898 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:35:20.899 | ERROR    | cli.main:main:2862 - Unexpected error: The private key must be exactly 32 bytes long, instead of 42 bytes.
+2025-08-15 11:39:32.969 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:39:34.002 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:39:35.548 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:39:36.355 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:39:37.652 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:39:40.378 | INFO     | cli.main:_patch_chatbot_methods:288 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-15 11:39:40.379 | INFO     | cli.main:_build_openrouter_chatbot:1418 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-15 11:39:40.379 | INFO     | cli.main:setup_tools:1726 - ✅ Initialized 3 trading tools
+2025-08-15 11:39:40.386 | INFO     | cli.main:_initialize_spoonos_agents:1787 - ✅ SpoonOS agents initialized successfully
+2025-08-15 11:39:40.527 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:39:40.849 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:39:40.856 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:39:40.868 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:39:40.868 | INFO     | cli.main:__init__:1388 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-15 11:39:40.871 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:39:44.944 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:39:44.944 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:39:45.863 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:46.362 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:46.363 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:39:51.559 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:39:51.559 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=805, has_tool_calls=False
+2025-08-15 11:39:52.062 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:52.558 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:52.558 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:39:54.307 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:39:54.308 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:39:54.795 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:55.306 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:39:55.307 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:40:00.388 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:00.389 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=805, has_tool_calls=False
+2025-08-15 11:40:00.879 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:01.372 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:01.372 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:40:06.749 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:06.749 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=805, has_tool_calls=False
+2025-08-15 11:40:07.244 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:07.763 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:07.765 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1682, has_tool_calls=False
+2025-08-15 11:40:14.013 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:14.013 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=902, has_tool_calls=False
+2025-08-15 11:40:14.519 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:15.028 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:15.028 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1682, has_tool_calls=False
+2025-08-15 11:40:16.961 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:16.961 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:40:17.476 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:17.991 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:17.991 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1793, has_tool_calls=False
+2025-08-15 11:40:20.381 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:20.381 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:40:21.967 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:22.473 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:22.474 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1904, has_tool_calls=False
+2025-08-15 11:40:24.914 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:24.914 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:40:25.440 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:25.924 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:40:25.925 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2015, has_tool_calls=False
+2025-08-15 11:40:27.195 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:40:27.195 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:40:27.195 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:23.385 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:42:24.439 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:42:25.534 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:42:26.873 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:42:28.057 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:42:28.132 | INFO     | cli.main:_patch_chatbot_methods:288 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-15 11:42:28.132 | INFO     | cli.main:_build_openrouter_chatbot:1418 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-15 11:42:28.132 | INFO     | cli.main:setup_tools:1726 - ✅ Initialized 3 trading tools
+2025-08-15 11:42:28.137 | INFO     | cli.main:_initialize_spoonos_agents:1787 - ✅ SpoonOS agents initialized successfully
+2025-08-15 11:42:28.182 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:42:28.337 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:42:28.383 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:42:28.421 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:42:28.421 | INFO     | cli.main:__init__:1388 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-15 11:42:28.426 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:42:31.098 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:31.098 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:31.641 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:32.130 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:32.130 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:42:33.750 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:33.750 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:34.282 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:34.782 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:34.782 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:42:36.247 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:36.247 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:36.741 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:37.230 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:37.232 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1682, has_tool_calls=False
+2025-08-15 11:42:38.835 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:38.835 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:39.327 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:39.888 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:39.892 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1793, has_tool_calls=False
+2025-08-15 11:42:41.448 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:41.448 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:41.956 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:42.438 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:42.441 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1904, has_tool_calls=False
+2025-08-15 11:42:44.307 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:44.307 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:44.818 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:45.331 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:45.334 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2015, has_tool_calls=False
+2025-08-15 11:42:47.911 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:47.912 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:48.406 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:48.962 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:48.965 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2126, has_tool_calls=False
+2025-08-15 11:42:50.924 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:50.924 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:51.410 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:51.898 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:51.900 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2237, has_tool_calls=False
+2025-08-15 11:42:53.735 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:53.736 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:54.250 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:54.798 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:54.801 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2348, has_tool_calls=False
+2025-08-15 11:42:56.722 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:56.722 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:57.274 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:57.779 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:42:57.783 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2459, has_tool_calls=False
+2025-08-15 11:42:59.435 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:42:59.435 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:42:59.907 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:00.383 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:00.385 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2570, has_tool_calls=False
+2025-08-15 11:43:01.837 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:01.837 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:02.329 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:02.841 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:02.843 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2681, has_tool_calls=False
+2025-08-15 11:43:04.653 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:04.653 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:05.162 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:05.671 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:05.673 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2792, has_tool_calls=False
+2025-08-15 11:43:07.165 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:07.166 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:07.720 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:08.210 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:08.213 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2903, has_tool_calls=False
+2025-08-15 11:43:10.338 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:10.338 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:10.845 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:11.426 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:11.428 | DEBUG    | cli.main:_parse_agent_opportunities:2001 - Parsing AI content for ethereum: Step 1: Observed output of cmd uniswap_liquidity execution: Error: 'access_token'
+
+Observed output of cmd uniswap_liquidity execution: Error: 'access_token'
+Step 2: Observed output of cmd uniswap_liqu...
+2025-08-15 11:43:11.429 | DEBUG    | cli.main:_parse_agent_opportunities:2030 - No JSON found, attempting text parsing for ethereum
+2025-08-15 11:43:11.429 | INFO     | cli.main:_parse_agent_opportunities:2051 - Total opportunities parsed for ethereum: 0
+2025-08-15 11:43:11.429 | INFO     | cli.main:scan_markets:1908 - AI agent found 0 opportunities on ethereum
+2025-08-15 11:43:11.431 | INFO     | cli.main:execute:574 - Monitoring DEX opportunities for ['ETH', 'USDC'] on ethereum
+2025-08-15 11:43:11.439 | INFO     | cli.main:scan_markets:1931 - DEX monitor found 1 opportunities on ethereum
+2025-08-15 11:43:11.590 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3014, has_tool_calls=False
+2025-08-15 11:43:13.150 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:13.150 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:13.711 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:14.287 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:14.287 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3014, has_tool_calls=False
+2025-08-15 11:43:16.296 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:16.296 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:16.811 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:17.310 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:17.310 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3014, has_tool_calls=False
+2025-08-15 11:43:19.167 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:19.167 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:19.674 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:20.167 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:20.170 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3125, has_tool_calls=False
+2025-08-15 11:43:22.764 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:22.764 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:23.256 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:24.156 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:24.159 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3236, has_tool_calls=False
+2025-08-15 11:43:25.955 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:25.956 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:26.448 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:27.114 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:27.117 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3347, has_tool_calls=False
+2025-08-15 11:43:29.362 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:29.362 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:29.858 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:30.366 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:30.369 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3458, has_tool_calls=False
+2025-08-15 11:43:32.424 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:32.424 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:32.931 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:33.426 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:33.429 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3569, has_tool_calls=False
+2025-08-15 11:43:36.156 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:36.157 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:36.642 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:37.156 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:37.158 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3680, has_tool_calls=False
+2025-08-15 11:43:39.077 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:39.077 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:39.587 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:40.082 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:40.085 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3791, has_tool_calls=False
+2025-08-15 11:43:41.821 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:41.821 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:42.335 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:42.835 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:42.838 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=3902, has_tool_calls=False
+2025-08-15 11:43:45.947 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:45.947 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:46.480 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:47.455 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:47.967 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:47.970 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=4013, has_tool_calls=False
+2025-08-15 11:43:49.829 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:49.829 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:50.378 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:50.926 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:50.930 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=4124, has_tool_calls=False
+2025-08-15 11:43:53.147 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:53.147 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:53.661 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:54.196 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:54.198 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=4235, has_tool_calls=False
+2025-08-15 11:43:55.957 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:43:55.957 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:43:56.495 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:56.987 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:43:56.989 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=4346, has_tool_calls=False
+2025-08-15 11:44:00.056 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:44:00.056 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:44:00.551 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:44:01.043 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:44:01.046 | DEBUG    | cli.main:_parse_agent_opportunities:2001 - Parsing AI content for polygon: Step 1: Observed output of cmd uniswap_liquidity execution: Error: 'access_token'
+
+Observed output of cmd uniswap_liquidity execution: Error: 'access_token'
+Step 2: Observed output of cmd uniswap_liqu...
+2025-08-15 11:44:01.046 | DEBUG    | cli.main:_parse_agent_opportunities:2030 - No JSON found, attempting text parsing for polygon
+2025-08-15 11:44:01.046 | INFO     | cli.main:_parse_agent_opportunities:2051 - Total opportunities parsed for polygon: 0
+2025-08-15 11:44:01.047 | INFO     | cli.main:scan_markets:1908 - AI agent found 0 opportunities on polygon
+2025-08-15 11:44:01.047 | INFO     | cli.main:execute:574 - Monitoring DEX opportunities for ['ETH', 'USDC'] on polygon
+2025-08-15 11:44:01.047 | INFO     | cli.main:scan_markets:1931 - DEX monitor found 2 opportunities on polygon
+2025-08-15 11:44:32.588 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:44:33.475 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:44:34.665 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:44:35.513 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:44:36.539 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:44:36.600 | INFO     | cli.main:_patch_chatbot_methods:288 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-15 11:44:36.601 | INFO     | cli.main:_build_openrouter_chatbot:1418 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-15 11:44:36.601 | INFO     | cli.main:setup_tools:1726 - ✅ Initialized 3 trading tools
+2025-08-15 11:44:36.605 | INFO     | cli.main:_initialize_spoonos_agents:1787 - ✅ SpoonOS agents initialized successfully
+2025-08-15 11:44:36.608 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:44:36.688 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:44:36.772 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:44:36.788 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:44:36.788 | INFO     | cli.main:__init__:1388 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-15 11:44:36.790 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:44:41.367 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:44:41.367 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:44:41.861 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:44:42.480 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:44:42.997 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:44:42.998 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:11.803 | INFO     | cli.main:setup_logging:1610 - Logging system configured
+2025-08-15 11:45:13.916 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to ethereum network (Chain ID: 1)
+2025-08-15 11:45:14.918 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to polygon network (Chain ID: 137)
+2025-08-15 11:45:15.877 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to bsc network (Chain ID: 56)
+2025-08-15 11:45:17.090 | INFO     | cli.main:setup_web3:1644 - ✅ Connected to arbitrum network (Chain ID: 42161)
+2025-08-15 11:45:17.158 | INFO     | cli.main:_patch_chatbot_methods:288 - 🧽 Patched ChatBot to sanitize + filter tool_calls for Spoon agents
+2025-08-15 11:45:17.158 | INFO     | cli.main:_build_openrouter_chatbot:1418 - ✅ Spoon ChatBot ready via OpenRouter
+2025-08-15 11:45:17.159 | INFO     | cli.main:setup_tools:1726 - ✅ Initialized 3 trading tools
+2025-08-15 11:45:17.166 | INFO     | cli.main:_initialize_spoonos_agents:1787 - ✅ SpoonOS agents initialized successfully
+2025-08-15 11:45:17.168 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:45:17.316 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:45:17.320 | INFO     | cli.main:setup_redis:1659 - ✅ Connected to Redis cache
+2025-08-15 11:45:17.377 | INFO     | cli.main:setup_database:1671 - ✅ Connected to database
+2025-08-15 11:45:17.377 | INFO     | cli.main:__init__:1388 - 🚀 DeFi AI Trading Bot initialized successfully
+2025-08-15 11:45:17.380 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:20.029 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:20.030 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:45:20.619 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:20.620 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:25.089 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:25.089 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=625, has_tool_calls=False
+2025-08-15 11:45:25.628 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:26.149 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:26.677 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:26.678 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:28.578 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:28.578 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:45:29.069 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:29.560 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:29.560 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:33.800 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:33.800 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=598, has_tool_calls=False
+2025-08-15 11:45:34.316 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:34.818 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:34.818 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:38.643 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:38.645 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=664, has_tool_calls=False
+2025-08-15 11:45:39.161 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:39.161 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:44.434 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:44.434 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=657, has_tool_calls=False
+2025-08-15 11:45:44.926 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:44.926 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:49.349 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:49.349 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=675, has_tool_calls=False
+2025-08-15 11:45:49.835 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:49.835 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1571, has_tool_calls=False
+2025-08-15 11:45:50.961 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:50.961 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:45:51.477 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:51.478 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1682, has_tool_calls=False
+2025-08-15 11:45:55.048 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=669, has_tool_calls=False
+2025-08-15 11:45:55.048 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1682, has_tool_calls=False
+2025-08-15 11:45:56.415 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:56.415 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:45:57.028 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:45:57.029 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1793, has_tool_calls=False
+2025-08-15 11:45:59.180 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:45:59.180 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:45:59.689 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:46:00.201 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:46:00.202 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=1904, has_tool_calls=False
+2025-08-15 11:46:02.355 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:46:02.355 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:46:02.868 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:46:03.404 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
+2025-08-15 11:46:03.405 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=user, content_len=2015, has_tool_calls=False
+2025-08-15 11:46:04.842 | DEBUG    | cli.main:add_message_patched:435 - 🔒 Stripping tool_calls to avoid Pydantic validation issues (SPOON_TOOLCALL_MODE=strip)
+2025-08-15 11:46:04.842 | DEBUG    | cli.main:add_message_patched:441 - Adding message: role=assistant, content_len=18, has_tool_calls=False
+2025-08-15 11:46:04.843 | DEBUG    | cli.main:add_message_patched:393 - 🛑 Skipping tool message - no recent tool_calls found
