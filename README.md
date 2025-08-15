@@ -2,6 +2,10 @@
 
 An intelligent multi-chain DeFi trading bot powered by SpoonOS Agent Framework, featuring AI-driven market analysis, risk assessment, and automated trade execution.
 
+## Demo Video
+
+🎥 **Project Demo:** [An intelligent multi-chain DeFi trading bot – Live Demo](https://vimeo.com/1110142910?share=copy)
+
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Status](https://img.shields.io/badge/status-alpha-yellow.svg)
