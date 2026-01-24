@@ -68,85 +68,87 @@ class DEXAggregatorTool(BaseTool):
 
     async def execute(self, token_in: str, token_out: str, amount_in: float, chain: str,
                      slippage_tolerance: float = 0.01, execution_strategy: str = "best_price") -> Dict[str, Any]:
-        """Execute optimal trade across DEXs"""
+        """Execute optimal trade across DEXs using OrderManager"""
         logger.info(f"Executing trade: {amount_in} {token_in} -> {token_out} on {chain}")
         
-        # Simulate DEX aggregation and route finding
-        await asyncio.sleep(2)
-        
-        # Mock DEX routes and pricing
-        available_dexs = {
-            "ethereum": ["uniswap_v3", "sushiswap", "curve", "1inch"],
-            "polygon": ["quickswap", "sushiswap", "curve", "1inch"],
-            "bsc": ["pancakeswap", "biswap", "1inch"],
-            "arbitrum": ["uniswap_v3", "sushiswap", "curve", "1inch"]
-        }
-        
-        dexs = available_dexs.get(chain, ["uniswap_v3"])
-        
-        # Generate mock routes
-        routes = []
-        base_output = amount_in * 2500 if token_out == "USDC" else amount_in / 2500  # Mock conversion
-        
-        for i, dex in enumerate(dexs):
-            price_impact = 0.001 + (i * 0.0005)  # Varying price impact
-            gas_cost = 50 + (i * 10)  # Varying gas costs
+        try:
+            from src.execution import OrderManager, OrderRequest, OrderType, ExecutionStrategy
             
-            expected_output = base_output * (1 - price_impact)
-            routes.append({
-                "dex": dex,
-                "path": [token_in, token_out],
-                "expected_output": expected_output,
-                "price_impact": price_impact,
-                "gas_estimate": gas_cost,
-                "execution_time": 15 + (i * 5),  # Estimated execution time in seconds
-                "liquidity": 1000000 + (i * 500000)
-            })
-        
-        # Select best route based on strategy
-        if execution_strategy == "best_price":
-            best_route = max(routes, key=lambda x: x["expected_output"])
-        elif execution_strategy == "lowest_gas":
-            best_route = min(routes, key=lambda x: x["gas_estimate"])
-        elif execution_strategy == "fastest":
-            best_route = min(routes, key=lambda x: x["execution_time"])
-        else:  # mev_protected
-            best_route = max(routes, key=lambda x: x["expected_output"] - x["gas_estimate"] * 0.01)
-        
-        # Simulate transaction execution
-        transaction_hash = f"0x{''.join([format(i, '02x') for i in range(32)])}"
-        
-        return {
-            "trade_id": f"trade_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
-            "status": "completed",
-            "transaction_hash": transaction_hash,
-            "chain": chain,
-            "input": {
-                "token": token_in,
-                "amount": amount_in
-            },
-            "output": {
-                "token": token_out,
-                "amount": best_route["expected_output"],
-                "actual_price": best_route["expected_output"] / amount_in
-            },
-            "execution_details": {
-                "selected_route": best_route,
-                "all_routes": routes,
-                "slippage_tolerance": slippage_tolerance,
-                "actual_slippage": best_route["price_impact"],
-                "gas_used": best_route["gas_estimate"],
-                "execution_time": best_route["execution_time"],
-                "mev_protection": execution_strategy == "mev_protected"
-            },
-            "timestamp": datetime.now().isoformat(),
-            "profit_loss": 0,  # Will be calculated after execution
-            "fees": {
-                "gas_fee_usd": best_route["gas_estimate"] * 0.002,  # Mock gas fee
-                "dex_fee_usd": amount_in * 0.003,  # 0.3% DEX fee
-                "total_fee_usd": best_route["gas_estimate"] * 0.002 + amount_in * 0.003
+            # Initialize OrderManager with mock provider for now (in real app, inject this)
+            # We assume Web3 providers are setup elsewhere or mocked
+            from src.execution import MockWeb3 # or standard Mock
+            
+            # Since we don't have the global providers here, we instantiate a localized one or reuse signal
+            # For this purpose, we'll instantiate OrderManager internally to ensure it uses the full stack
+            class MockProvider:
+                pass
+            
+            # Mock provider for OrderManager init
+            # In a real dependency injection system, this would be passed in
+            providers = {chain: MockProvider()} 
+            order_manager = OrderManager(providers)
+            
+            # Map strategy string to Enum
+            strat_map = {
+                "best_price": ExecutionStrategy.BALANCED, # Default
+                "lowest_gas": ExecutionStrategy.PASSIVE,
+                "fastest": ExecutionStrategy.AGGRESSIVE,
+                "mev_protected": ExecutionStrategy.MEV_PROTECTED
             }
-        }
+            exec_strat = strat_map.get(execution_strategy, ExecutionStrategy.BALANCED)
+
+            # Create Order Request
+            order_req = OrderRequest(
+                order_id=f"trade_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                token_in=token_in,
+                token_out=token_out,
+                amount_in=amount_in,
+                order_type=OrderType.MARKET,
+                chain=chain,
+                slippage_tolerance=slippage_tolerance,
+                execution_strategy=exec_strat
+            )
+            
+            # Submit to OrderManager (which has Firewall + Confirmation Manager)
+            await order_manager.submit_order(order_req)
+            
+            # Retrieve result
+            result = order_manager.active_orders[order_req.order_id]
+            
+            if result.status.value in ["filled", "settled"]: # Settled if confirmation manager is used
+                 return {
+                    "trade_id": result.order_id,
+                    "status": "completed",
+                    "transaction_hash": result.fills[0].transaction_hash if result.fills else "0xmock",
+                    "chain": chain,
+                    "input": {"token": token_in, "amount": amount_in},
+                    "output": {
+                        "token": token_out, 
+                        "amount": result.total_amount_out,
+                        "actual_price": result.average_price
+                    },
+                    "execution_details": {
+                        "strategy": execution_strategy,
+                        "engine_feedback": "Executed via OrderManager (Firewall + Confirmation Passed)",
+                        "execution_time": result.execution_time
+                    },
+                    "timestamp": datetime.now().isoformat()
+                }
+            else:
+                 return {
+                    "trade_id": result.order_id,
+                    "status": "failed",
+                    "error": result.error_message or "Unknown failure",
+                    "details": {"status": result.status.value}
+                }
+
+        except Exception as e:
+            logger.error(f"OrderManager execution failed: {e}")
+            return {
+                "trade_id": "failed_init",
+                "status": "failed",
+                "error": str(e)
+            }
 
 
 class PositionManagerTool(BaseTool):

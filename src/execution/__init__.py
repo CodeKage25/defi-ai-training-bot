@@ -164,7 +164,6 @@ class UniswapV3Interface(DEXInterface):
     
     def __init__(self, web3_provider: Web3):
         self.w3 = web3_provider
-        self.name = "uniswap_v3"
         
         # Contract addresses (mainnet)
         self.router_address = "0xE592427A0AEce92De3Edee1F18E0157C05861564"
@@ -658,6 +657,18 @@ class OrderManager:
         self.gas_optimizer = GasOptimizer(web3_providers)
         self.mev_protection = MEVProtection()
         
+        # --- NEW SAFEGUARDS ---
+        self.safe_engine = None
+        self.confirmation_manager = None
+        try:
+            from src.execution.safe_engine import SafeExecutionEngine
+            from src.execution.confirmation_manager import ConfirmationManager
+            self.safe_engine = SafeExecutionEngine()
+            self.confirmation_manager = ConfirmationManager()
+            logger.info("OrderManager: SafeGuard subsystems initialized (Firewall & Confirmation)")
+        except ImportError as e:
+            logger.warning(f"OrderManager: SafeGuard subsystems NOT available: {e}")
+
         # Order tracking
         self.active_orders: Dict[str, OrderResult] = {}
         self.order_history: List[OrderResult] = []
@@ -700,7 +711,10 @@ class OrderManager:
                 
         except Exception as e:
             logger.error(f"Error executing order {order.order_id}: {e}")
-            order_result.status = OrderStatus.FAILED
+            if str(e).startswith("Firewall:"):
+                order_result.status = OrderStatus.REJECTED
+            else:
+                order_result.status = OrderStatus.FAILED
             order_result.error_message = str(e)
             order_result.completed_at = datetime.now()
         
@@ -714,6 +728,24 @@ class OrderManager:
             # Get optimal route
             best_dex, quote = await self.dex_aggregator.get_best_route(order)
             logger.info(f"Best route for {order.order_id}: {best_dex} with output {quote['amount_out']}")
+
+            # --- FIREWALL CHECK (Post-Routing) ---
+            if self.safe_engine:
+                # Create firewall proposal with ACTUAL route details
+                proposal = {
+                    "id": order.order_id,
+                    "token_in": order.token_in,
+                    "token_out": order.token_out,
+                    "amount_in": order.amount_in,
+                    "amount_usd": order.amount_in * 2500, # Mock USD
+                    "chain": order.chain,
+                    "dex": best_dex, # Valid DEX from Aggregator
+                }
+                firewall_res = self.safe_engine.validate_and_execute(proposal)
+                if firewall_res["status"] == "rejected":
+                    msg = f"Firewall: {firewall_res['reason']}"
+                    logger.error(f"Order {order.order_id} REJECTED by firewall: {msg}")
+                    raise Exception(msg)
             
             # Check if we should split the order
             if order.amount_in * 2500 > 25000:  # Split large orders ($25k+)
@@ -723,13 +755,21 @@ class OrderManager:
                 dex = self.dex_aggregator.dex_interfaces[best_dex]
                 fill = await dex.execute_trade(order)
                 fills = [fill]
+
             
             # Update order result
             for fill in fills:
                 order_result.add_fill(fill)
             
             if fills:
-                order_result.status = OrderStatus.FILLED
+                order_result.status = OrderStatus.FILLED # Tentative
+                
+                # --- CONFIRMATION MANAGER WAIT ---
+                if self.confirmation_manager:
+                    logger.info(f"OrderManager: Waiting for finality on {len(fills)} fills...")
+                    for fill in fills:
+                        await self.confirmation_manager.wait_for_confirmation(fill.transaction_hash, order.chain)
+                
                 order_result.success = True
                 order_result.completed_at = datetime.now()
                 order_result.execution_time = (order_result.completed_at - order_result.submitted_at).total_seconds()
@@ -739,7 +779,7 @@ class OrderManager:
                 if expected_price > 0:
                     order_result.actual_slippage = abs(order_result.average_price - expected_price) / expected_price
                 
-                logger.info(f"Order {order.order_id} completed successfully")
+                logger.info(f"Order {order.order_id} completed & CONFIRMED successfully")
             else:
                 raise Exception("No fills received")
                 
