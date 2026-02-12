@@ -13,6 +13,8 @@ An intelligent multi-chain DeFi trading bot powered by SpoonOS Agent Framework, 
 ## 🌟 Features
 
 - **🧠 AI Market Intelligence**: Real-time multi-chain opportunity scanning
+- **🛡️ Deterministic Firewall**: Rigid checks on Solvency, Slippage, and Whitelists (Zero AI Hallucinations)
+- **✅ Confirmation Manager**: Preventing "Ghost Trades" by waiting for block finality
 - **⚠️ Risk Assessment**: Advanced AI-powered risk analysis and portfolio optimization
 - **🚀 Smart Execution**: Optimal DEX aggregation and MEV-protected trading
 - **📊 Position Management**: Automated stop-loss, take-profit, and portfolio tracking
@@ -21,24 +23,41 @@ An intelligent multi-chain DeFi trading bot powered by SpoonOS Agent Framework, 
 
 ## 🏗️ Architecture
 
-The bot uses a multi-agent architecture powered by SpoonOS:
+The bot uses a novel **Dual-Layer "Hybrid Intelligence" Architecture** powered by SpoonOS. This design solves the "hallucination problem" by separating AI decision-making from high-stakes execution.
+
+### 🧠 Layer 1: The Cognitive Brain (SpoonOS Agents)
+*   **Role**: Strategy, Intent, and Adaptation.
+*   **Components**: `Market Intelligence Agent`, `Risk Assessment Agent`, `Execution Manager Agent`.
+*   **Function**: Consumes market data, news, and graphs to form an *intent* (e.g., "Accumulate ETH"). It hands off structured requests to the Body.
+
+### 🛡️ Layer 2: The Deterministic Body (Execution Engine)
+*   **Role**: Validation, Routing, Execution, and Finality.
+*   **Components**:
+    *   **`OrderManager`**: The central nervous system that orchestrates the workflow.
+    *   **`SafeExecutionEngine` (The Firewall)**: A rigid Python/Rust sandbox that validates every trade against `config.json` whitelists, solvency checks, and risk caps. **If the AI requests a dangerous trade, the Firewall kills it.**
+    *   **`ConfirmationManager`**: Tracks transaction finality (block confirmations) to ensure trades are irreversible before updating state.
 
 ```mermaid
-graph TB
-    A[Market Intelligence Agent] --> D[Trading Orchestrator]
-    B[Risk Assessment Agent] --> D
-    C[Execution Manager Agent] --> D
-    
-    D --> E[DEX Integrations]
-    D --> F[Position Tracking]
-    D --> G[Risk Monitoring]
+graph TD
+    subgraph Brain ["🧠 Cognitive Layer (SpoonOS Agents)"]
+        A[Market Intelligence] --> B[Execution Agent]
+        R[Risk Agent] --> B
+    end
+
+    subgraph Body ["🛡️ Deterministic Layer (Python/Rust)"]
+        B -- "Intent (OrderRequest)" --> OM[OrderManager]
+        OM --> DA[DEX Aggregator]
+        DA -- "Route" --> OM
+        OM --> FW{Firewall <br/> SafeExecutionEngine}
+        FW -- "Reject" --> B
+        FW -- "Approve" --> EX[Execution]
+        EX --> CM[Confirmation Manager]
+        CM -- "Finalized" --> OM
+    end
 ```
 
-### Core Agents
-
-1. **Market Intelligence Agent**: Scans opportunities across chains using Chainbase, price aggregators, and DEX monitors
-2. **Risk Assessment Agent**: Evaluates smart contract risks, predicts volatility, optimizes portfolios
-3. **Execution Manager Agent**: Handles optimal trade routing, position management, and gas optimization
+### Future Optimization: Rust Engine 🦀
+The `rust-engine/` directory contains a prototype of the execution layer rewritten in Rust for microsecond latency and type-safe financial operations.
 
 ## 🚀 Quick Start
 
@@ -343,7 +362,10 @@ export TELEGRAM_CHAT_ID="your-chat-id"
 ## 🚧 Roadmap
 
 ### Phase 1 (Current)
-- ✅ Core agent architecture
+- ✅ Core agent architecture (SpoonOS)
+- ✅ Dual-Layer "Brain/Body" Separation
+- ✅ Deterministic Firewall (`SafeExecutionEngine`)
+- ✅ Transaction Finality Tracking (`ConfirmationManager`)
 - ✅ Basic market scanning
 - ✅ Risk assessment framework
 - ✅ Trade execution engine
